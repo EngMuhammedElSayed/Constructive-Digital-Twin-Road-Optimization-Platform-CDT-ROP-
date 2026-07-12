@@ -1,8 +1,9 @@
-"""
-Project Model
+from dataclasses import dataclass
 
-This file defines the overall Digital Twin project.
-"""
-Commit message
+@dataclass
+class Project:
+    """
+    Represents one Digital Twin Road Optimization project.
+    """
 
-Create project model
+    name: str
