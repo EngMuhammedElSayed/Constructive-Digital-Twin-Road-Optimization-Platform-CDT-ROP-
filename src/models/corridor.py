@@ -1,3 +1,0 @@
-"""
-Road Corridor Model.
-"""
