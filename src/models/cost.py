@@ -1,1 +1,3 @@
-
+"""
+Construction Cost Model.
+"""
