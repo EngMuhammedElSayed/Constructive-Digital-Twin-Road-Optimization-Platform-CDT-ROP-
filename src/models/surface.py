@@ -1,1 +1,3 @@
-
+"""
+Existing Ground Surface Model.
+"""
