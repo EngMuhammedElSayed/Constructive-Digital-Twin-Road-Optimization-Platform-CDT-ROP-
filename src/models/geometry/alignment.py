@@ -1,19 +1,77 @@
-Alignment
+"""
+Alignment Data Model
 
-name
+This module defines the road alignment model used by the
+Constructive Digital Twin Road Optimization Platform (CDT-ROP).
 
-start_station
+The Alignment object represents the geometric definition of a roadway
+centerline. It stores only engineering data and does not perform any
+calculations.
 
-end_station
+Author:
+Eng. Muhammed
 
-length
+Research:
+MSc Research - Cairo University
+"""
 
-design_speed
+from dataclasses import dataclass
+from typing import Optional
 
-horizontal_curves
 
-vertical_curves
+@dataclass
+class Alignment:
+    """
+    Represents a roadway alignment.
 
-spirals
+    This model stores alignment metadata and geometric properties.
+    Engineering calculations are implemented in the calculation engine.
+    """
 
-tangents
+    # -------------------------------------------------
+    # General Information
+    # -------------------------------------------------
+
+    name: str
+
+    description: str = ""
+
+    alignment_type: str = "Centerline"
+
+    # -------------------------------------------------
+    # Stationing
+    # -------------------------------------------------
+
+    start_station: float = 0.0
+
+    end_station: float = 0.0
+
+    length: float = 0.0
+
+    # -------------------------------------------------
+    # Design Parameters
+    # -------------------------------------------------
+
+    design_speed: float = 90.0      # km/h
+
+    design_standard: str = "AASHTO"
+
+    # -------------------------------------------------
+    # Geometry Information
+    # -------------------------------------------------
+
+    number_of_tangents: int = 0
+
+    number_of_horizontal_curves: int = 0
+
+    number_of_vertical_curves: int = 0
+
+    number_of_spirals: int = 0
+
+    # -------------------------------------------------
+    # References
+    # -------------------------------------------------
+
+    parent_project: Optional[str] = None
+
+    source_file: Optional[str] = None
