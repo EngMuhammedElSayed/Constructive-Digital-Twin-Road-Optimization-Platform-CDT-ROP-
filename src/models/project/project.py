@@ -1,133 +1,54 @@
 """
-Project Data Model
+Project Model
 
-Constructive Digital Twin Road Optimization Platform (CDT-ROP)
-
-This module defines the root Project object.
-The Project aggregates all engineering models used by the system.
-
-Author:
-Eng. Muhammed
-
-Research:
-MSc Research
-Cairo University
+Root object of the CDT-ROP platform.
 """
 
 from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Optional
 
-# Geometry
-from models.geometry.alignment import Alignment
-from models.geometry.corridor import Corridor
-from models.geometry.surface import Surface
+from models.project.project_metadata import ProjectMetadata
+from models.project.project_settings import ProjectSettings
+
 from models.geometry.road_geometry import RoadGeometry
+from models.geometry.surface import Surface
+from models.geometry.corridor import Corridor
+from models.geometry.alignment import Alignment
+from models.geometry.profile import Profile
+from models.geometry.design_criteria import DesignCriteria
 
-# Traffic
 from models.traffic.traffic_data import TrafficData
 
-# Cost
 from models.cost.cost_parameters import CostParameters
 
-# Optimization
 from models.optimization.optimization_settings import OptimizationSettings
-
-# Standards
-from standards.design_criteria import DesignCriteria
 
 
 @dataclass
 class Project:
     """
-    Root object representing a complete road project.
+    Root project object.
 
-    Every engineering module inside the Constructive Digital Twin
-    belongs to one Project.
+    Every module in the software receives a Project object.
     """
 
-    # ============================================================
-    # Project Information
-    # ============================================================
+    metadata: ProjectMetadata = field(default_factory=ProjectMetadata)
 
-    project_name: str
+    settings: ProjectSettings = field(default_factory=ProjectSettings)
 
-    project_code: str = ""
+    geometry: RoadGeometry = field(default_factory=RoadGeometry)
 
-    description: str = ""
+    alignment: Alignment = field(default_factory=Alignment)
 
-    client: str = ""
+    profile: Profile = field(default_factory=Profile)
 
-    designer: str = ""
+    surface: Surface = field(default_factory=Surface)
 
-    organization: str = ""
+    corridor: Corridor = field(default_factory=Corridor)
 
-    country: str = "Egypt"
+    design_criteria: DesignCriteria = field(default_factory=DesignCriteria)
 
-    city: str = ""
+    traffic: TrafficData = field(default_factory=TrafficData)
 
-    coordinate_system: str = ""
+    cost: CostParameters = field(default_factory=CostParameters)
 
-    created_date: datetime = field(default_factory=datetime.now)
-
-    last_modified: datetime = field(default_factory=datetime.now)
-
-    # ============================================================
-    # Geometry
-    # ============================================================
-
-    alignment: Optional[Alignment] = None
-
-    corridor: Optional[Corridor] = None
-
-    road_geometry: Optional[RoadGeometry] = None
-
-    existing_surface: Optional[Surface] = None
-
-    proposed_surface: Optional[Surface] = None
-
-    # ============================================================
-    # Traffic
-    # ============================================================
-
-    traffic_data: Optional[TrafficData] = None
-
-    # ============================================================
-    # Cost
-    # ============================================================
-
-    cost_parameters: Optional[CostParameters] = None
-
-    # ============================================================
-    # Design Standards
-    # ============================================================
-
-    design_criteria: Optional[DesignCriteria] = None
-
-    # ============================================================
-    # Optimization
-    # ============================================================
-
-    optimization_settings: Optional[OptimizationSettings] = None
-
-    # ============================================================
-    # Civil 3D
-    # ============================================================
-
-    civil3d_drawing: str = ""
-
-    civil3d_version: str = ""
-
-    # ============================================================
-    # Digital Twin
-    # ============================================================
-
-    digital_twin_enabled: bool = True
-
-    twin_last_update: Optional[datetime] = None
-
-    # ============================================================
-    # Status
-    # ============================================================
-
-    status: str = "Draft"
+    optimization: OptimizationSettings = field(default_factory=OptimizationSettings)
