@@ -1,1 +1,54 @@
-
+                               User
+                                 │
+                                 ▼
+                        User Interface (Future)
+                                 │
+                                 ▼
+                        Application Engine
+                                 │
+        ┌────────────────────────┼────────────────────────┐
+        │                        │                        │
+        ▼                        ▼                        ▼
+  Project Manager          Import Engine         Validation Engine
+                                 │
+                                 ▼
+                         Engineering Models
+                                 │
+      ┌──────────────┬────────────┼────────────┬──────────────┐
+      ▼              ▼            ▼            ▼              ▼
+ RoadGeometry   TrafficData   CostParameters  DesignCriteria  OptimizationSettings
+      │
+      ▼
+ ┌───────────────┬───────────────┬───────────────┬──────────────┐
+ ▼               ▼               ▼              ▼
+Alignment      Profile        Surface       Corridor
+                                 │
+                                 ▼
+                       Engineering Calculations
+                                 │
+       ┌──────────────┬───────────────┬──────────────┐
+       ▼              ▼               ▼
+ Geometry       Traffic Analysis   Cost Analysis
+                                 │
+                                 ▼
+                        Optimization Engine
+                                 │
+        ┌────────────────────────┼────────────────────────┐
+        ▼                        ▼                        ▼
+ Objective Functions      Constraint Engine        NSGA-II Solver
+                                 │
+                                 ▼
+                         Pareto Solutions
+                                 │
+                                 ▼
+                       Visualization Engine
+                                 │
+                                 ▼
+                          Reporting Engine
+                                 │
+                                 ▼
+                           Export Engine
+                                 │
+        ┌──────────────┬──────────────┬──────────────┬──────────────┐
+        ▼              ▼              ▼              ▼
+       CSV           Excel          JSON         LandXML

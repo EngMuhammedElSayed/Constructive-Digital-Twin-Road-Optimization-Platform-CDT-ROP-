@@ -1,0 +1,2 @@
+TrafficData
+| RoadID | SectionID | AADT | DHV | HeavyVehiclePercentage | DirectionalDistribution | PeakHourFactor |

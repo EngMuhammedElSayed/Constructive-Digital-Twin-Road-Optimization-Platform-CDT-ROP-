@@ -1,1 +1,23 @@
-
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ CDT-ROP - Constructive Digital Twin Road Optimization Platform              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Project Explorer │                    3D View                              │
+│──────────────────│                                                   ▲      │
+│ ▸ Project        │                                                   │      │
+│ ▸ Alignment      │              Road Alignment                       │      │
+│ ▸ Surface        │              Terrain Model                        │      │
+│ ▸ Traffic        │              Corridor                             │      │
+│ ▸ Cost           │                                                   │      │
+│ ▸ Optimization   │                                                   │      │
+│ ▸ Reports        │                                                   ▼      │
+├──────────────────┼──────────────────────────────────────────────────────────┤
+│ Properties       │ Engineering Dashboard                                 │
+│                  │                                                        │
+│ Design Speed     │ SSD Status                                            │
+│ Radius           │ Earthwork                                             │
+│ Grade            │ Cost                                                  │
+│ Superelevation   │ Capacity                                              │
+│                  │ Optimization Progress                                 │
+├──────────────────┴──────────────────────────────────────────────────────────┤
+│ Status Bar: Ready | Standard: AASHTO | Project: Qiddiya | Units: Metric    │
+└─────────────────────────────────────────────────────────────────────────────┘
