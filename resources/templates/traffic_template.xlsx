@@ -1,0 +1,18 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+ws = wb.active
+ws.title = "Traffic"
+
+ws.append([
+    "Station",
+    "AADT",
+    "DHV",
+    "PHF",
+    "Heavy Vehicle %",
+    "Design Speed",
+    "LOS"
+])
+
+wb.save("resources/templates/traffic_template.xlsx")

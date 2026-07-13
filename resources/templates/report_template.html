@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>{{ report.title }}</title>
+
+<link rel="stylesheet" href="report.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>{{ report.title }}</h1>
+
+<p>{{ report.subtitle }}</p>
+
+</header>
+
+{% include "partials/project_information.html" %}
+
+{% if alignment %}
+{% include "partials/alignment.html" %}
+{% endif %}
+
+{% if terrain %}
+{% include "partials/terrain.html" %}
+{% endif %}
+
+{% if profile %}
+{% include "partials/profile.html" %}
+{% endif %}
+
+{% if traffic %}
+{% include "partials/traffic.html" %}
+{% endif %}
+
+{% if weather %}
+{% include "partials/weather.html" %}
+{% endif %}
+
+{% if cost %}
+{% include "partials/cost.html" %}
+{% endif %}
+
+{% if optimization %}
+{% include "partials/optimization.html" %}
+{% endif %}
+
+{% if digital_twin %}
+{% include "partials/digital_twin.html" %}
+{% endif %}
+
+{% if figures %}
+{% include "partials/figures.html" %}
+{% endif %}
+
+{% if conclusion %}
+{% include "partials/conclusion.html" %}
+{% endif %}
+
+<footer>
+
+Generated Automatically by CDT-ROP
+
+</footer>
+
+</body>
+
+</html>

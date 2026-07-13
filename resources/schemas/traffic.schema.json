@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cdt-rop.org/schema/traffic.schema.json",
+
+  "title": "Traffic Schema",
+  "description": "Canonical traffic model used throughout CDT-ROP.",
+
+  "type": "object",
+
+  "required": [
+    "metadata",
+    "traffic"
+  ],
+
+  "properties": {
+
+    "metadata": {
+
+      "type": "object",
+
+      "properties": {
+
+        "study_name": {
+          "type": "string"
+        },
+
+        "analysis_date": {
+          "type": "string",
+          "format": "date"
+        },
+
+        "source": {
+          "type": "string"
+        }
+
+      }
+
+    },
+
+    "traffic": {
+
+      "type": "object",
+
+      "properties": {
+
+        "road_segments": {
+
+          "type": "array",
+
+          "items": {
+            "$ref": "#/$defs/roadSegment"
+          }
+
+        },
+
+        "intersections": {
+
+          "type": "array",
+
+          "items": {
+            "$ref": "#/$defs/intersection"
+          }
+
+        }
+
+      }
+
+    }
+
+  },
+
+  "$defs": {
+
+    "roadSegment": {
+
+      "type": "object",
+
+      "required": [
+        "segment_id"
+      ],
+
+      "properties": {
+
+        "segment_id": {
+          "type": "string"
+        },
+
+        "start_station": {
+          "type": "number"
+        },
+
+        "end_station": {
+          "type": "number"
+        },
+
+        "aadt": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "design_hour_volume": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "peak_hour_factor": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "heavy_vehicle_percentage": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "design_speed": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "posted_speed": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "number_of_lanes": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+
+        "level_of_service": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+
+      }
+
+    },
+
+    "intersection": {
+
+      "type": "object",
+
+      "required": [
+        "intersection_id"
+      ],
+
+      "properties": {
+
+        "intersection_id": {
+          "type": "string"
+        },
+
+        "intersection_type": {
+          "type": "string"
+        },
+
+        "control_type": {
+          "type": "string"
+        },
+
+        "incoming_volume": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "delay": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+
+        "level_of_service": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+
+      }
+
+    }
+
+  }
+
+}

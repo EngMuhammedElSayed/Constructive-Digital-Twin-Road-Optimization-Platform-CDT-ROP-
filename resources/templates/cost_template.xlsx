@@ -1,0 +1,17 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+ws = wb.active
+ws.title = "Cost"
+
+ws.append([
+    "Item Code",
+    "Description",
+    "Quantity",
+    "Unit",
+    "Unit Rate",
+    "Total"
+])
+
+wb.save("resources/templates/cost_template.xlsx")

@@ -1,0 +1,15 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+ws = wb.active
+ws.title = "Terrain"
+
+ws.append([
+    "Point ID",
+    "X",
+    "Y",
+    "Z"
+])
+
+wb.save("resources/templates/terrain_template.xlsx")

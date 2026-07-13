@@ -1,0 +1,63 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+# -------------------------
+# Weather_Data
+# -------------------------
+
+ws = wb.active
+ws.title = "Weather_Data"
+
+ws.append([
+    "Date",
+    "Time",
+    "Station ID",
+    "X",
+    "Y",
+    "Temperature (°C)",
+    "Rainfall (mm)",
+    "Humidity (%)",
+    "Wind Speed (m/s)",
+    "Wind Direction (°)",
+    "Visibility (m)",
+    "Pressure (hPa)",
+    "Weather Condition"
+])
+
+# -------------------------
+# Weather_Stations
+# -------------------------
+
+ws = wb.create_sheet("Weather_Stations")
+
+ws.append([
+    "Station ID",
+    "Station Name",
+    "Latitude",
+    "Longitude",
+    "Elevation",
+    "Provider"
+])
+
+# -------------------------
+# Project_Weather_Settings
+# -------------------------
+
+ws = wb.create_sheet("Project_Weather_Settings")
+
+ws.append([
+    "Parameter",
+    "Value",
+    "Unit"
+])
+
+# -------------------------
+# Instructions
+# -------------------------
+
+ws = wb.create_sheet("Instructions")
+
+ws.append(["Instructions"])
+
+wb.save("resources/templates/weather_template.xlsx")

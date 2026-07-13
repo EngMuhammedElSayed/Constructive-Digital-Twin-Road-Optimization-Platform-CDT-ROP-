@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cdt-rop.org/schema/project.schema.json",
+
+  "title": "CDT-ROP Project Schema",
+  "description": "Root schema describing a CDT-ROP project.",
+
+  "type": "object",
+
+  "required": [
+    "metadata",
+    "settings",
+    "modules"
+  ],
+
+  "properties": {
+
+    "metadata": {
+
+      "type": "object",
+
+      "required": [
+        "project_name",
+        "coordinate_system",
+        "unit_system"
+      ],
+
+      "properties": {
+
+        "project_name": {
+          "type": "string"
+        },
+
+        "project_id": {
+          "type": "string"
+        },
+
+        "description": {
+          "type": "string"
+        },
+
+        "designer": {
+          "type": "string"
+        },
+
+        "organization": {
+          "type": "string"
+        },
+
+        "creation_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+
+        "coordinate_system": {
+          "type": "string"
+        },
+
+        "unit_system": {
+          "type": "string"
+        }
+
+      }
+
+    },
+
+    "settings": {
+
+      "type": "object",
+
+      "properties": {
+
+        "design_standard": {
+          "type": "string"
+        },
+
+        "optimization_enabled": {
+          "type": "boolean"
+        },
+
+        "traffic_analysis_enabled": {
+          "type": "boolean"
+        },
+
+        "cost_analysis_enabled": {
+          "type": "boolean"
+        },
+
+        "weather_enabled": {
+          "type": "boolean"
+        },
+
+        "digital_twin_enabled": {
+          "type": "boolean"
+        }
+
+      }
+
+    },
+
+    "modules": {
+
+      "type": "object",
+
+      "properties": {
+
+        "alignment": {
+          "$ref": "alignment.schema.json"
+        },
+
+        "terrain": {
+          "$ref": "terrain.schema.json"
+        },
+
+        "surface": {
+          "$ref": "surface.schema.json"
+        },
+
+        "profile": {
+          "$ref": "profile.schema.json"
+        },
+
+        "corridor": {
+          "$ref": "corridor.schema.json"
+        },
+
+        "traffic": {
+          "$ref": "traffic.schema.json"
+        },
+
+        "cost": {
+          "$ref": "cost.schema.json"
+        },
+
+        "optimization": {
+          "$ref": "optimization.schema.json"
+        },
+
+        "weather": {
+          "$ref": "weather.schema.json"
+        },
+
+        "report": {
+          "$ref": "report.schema.json"
+        }
+
+      }
+
+    }
+
+  }
+
+}

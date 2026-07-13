@@ -1,0 +1,265 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{array}
+
+\title{ {{ report.title }} }
+
+\author{ {{ project.designer }} }
+
+\date{ {{ report.date }} }
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Project Information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if project %}
+
+\section{Project Information}
+
+\begin{tabular}{ll}
+
+Project Name &
+{{ project.name }}
+
+\\
+
+Project ID &
+{{ project.id }}
+
+\\
+
+Client &
+{{ project.client }}
+
+\\
+
+Standard &
+{{ project.standard }}
+
+\\
+
+Coordinate System &
+{{ project.coordinate_system }}
+
+\\
+
+Units &
+{{ project.units }}
+
+\\
+
+\end{tabular}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Alignment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if alignment %}
+
+\section{Alignment Summary}
+
+\begin{tabular}{ll}
+
+Length &
+{{ alignment.length }}
+
+\\
+
+Minimum Radius &
+{{ alignment.minimum_radius }}
+
+\\
+
+Maximum Grade &
+{{ alignment.maximum_grade }}
+
+\\
+
+Horizontal Curves &
+{{ alignment.horizontal_curves }}
+
+\\
+
+Vertical Curves &
+{{ alignment.vertical_curves }}
+
+\\
+
+\end{tabular}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Terrain
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if terrain %}
+
+\section{Terrain}
+
+{{ terrain.summary }}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Traffic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if traffic %}
+
+\section{Traffic}
+
+\begin{tabular}{ll}
+
+AADT &
+{{ traffic.aadt }}
+
+\\
+
+LOS &
+{{ traffic.los }}
+
+\\
+
+Design Speed &
+{{ traffic.design_speed }}
+
+\\
+
+\end{tabular}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Weather
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if weather %}
+
+\section{Weather}
+
+{{ weather.summary }}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Cost
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if cost %}
+
+\section{Cost Analysis}
+
+\begin{tabular}{ll}
+
+Earthwork &
+{{ cost.earthwork }}
+
+\\
+
+Pavement &
+{{ cost.pavement }}
+
+\\
+
+Structures &
+{{ cost.structures }}
+
+\\
+
+Utilities &
+{{ cost.utilities }}
+
+\\
+
+Total &
+{{ cost.total }}
+
+\\
+
+\end{tabular}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optimization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if optimization %}
+
+\section{Optimization Results}
+
+Algorithm:
+
+{{ optimization.algorithm }}
+
+Generation:
+
+{{ optimization.generation }}
+
+Best Fitness:
+
+{{ optimization.best_fitness }}
+
+Pareto Solutions:
+
+{{ optimization.pareto_count }}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if figures %}
+
+\section{Figures}
+
+{% for figure in figures %}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.9\textwidth]{ {{ figure.path }} }
+
+\caption{ {{ figure.caption }} }
+
+\end{figure}
+
+{% endfor %}
+
+{% endif %}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{% if conclusion %}
+
+\section{Conclusion}
+
+{{ conclusion }}
+
+{% endif %}
+
+\end{document}

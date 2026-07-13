@@ -1,0 +1,172 @@
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
+
+==================================================
+
+PROJECT REPORT
+
+==================================================
+
+Project Information
+-------------------
+
+Project Name:
+{{PROJECT_NAME}}
+
+Project ID:
+{{PROJECT_ID}}
+
+Client:
+{{CLIENT}}
+
+Designer:
+{{DESIGNER}}
+
+Organization:
+{{ORGANIZATION}}
+
+Design Standard:
+{{DESIGN_STANDARD}}
+
+Coordinate System:
+{{COORDINATE_SYSTEM}}
+
+Units:
+{{UNIT_SYSTEM}}
+
+Creation Date:
+{{CREATION_DATE}}
+
+==================================================
+
+1. Project Overview
+
+{{PROJECT_DESCRIPTION}}
+
+==================================================
+
+2. Alignment Summary
+
+Total Length:
+{{ALIGNMENT_LENGTH}}
+
+Horizontal Curves:
+{{HORIZONTAL_CURVES}}
+
+Vertical Curves:
+{{VERTICAL_CURVES}}
+
+Maximum Grade:
+{{MAX_GRADE}}
+
+Minimum Radius:
+{{MIN_RADIUS}}
+
+==================================================
+
+3. Terrain Summary
+
+Cut Volume:
+{{CUT_VOLUME}}
+
+Fill Volume:
+{{FILL_VOLUME}}
+
+Earthwork Balance:
+{{EARTHWORK_BALANCE}}
+
+==================================================
+
+4. Traffic Summary
+
+AADT:
+{{AADT}}
+
+Design Speed:
+{{DESIGN_SPEED}}
+
+LOS:
+{{LOS}}
+
+Heavy Vehicle Percentage:
+{{HV_PERCENT}}
+
+==================================================
+
+5. Weather Summary
+
+Average Temperature:
+{{AVG_TEMP}}
+
+Rainfall:
+{{RAIN}}
+
+Wind Speed:
+{{WIND}}
+
+==================================================
+
+6. Cost Summary
+
+Earthwork Cost:
+{{EARTHWORK_COST}}
+
+Pavement Cost:
+{{PAVEMENT_COST}}
+
+Structures Cost:
+{{STRUCTURE_COST}}
+
+Utilities Cost:
+{{UTILITY_COST}}
+
+Total Cost:
+{{TOTAL_COST}}
+
+==================================================
+
+7. Optimization Results
+
+Objective Function:
+{{OBJECTIVE}}
+
+Generation:
+{{GENERATION}}
+
+Best Fitness:
+{{FITNESS}}
+
+Pareto Solutions:
+{{PARETO_COUNT}}
+
+==================================================
+
+8. Digital Twin Status
+
+Synchronization:
+{{SYNC}}
+
+Last Update:
+{{LAST_UPDATE}}
+
+==================================================
+
+9. Figures
+
+{{ALIGNMENT_IMAGE}}
+
+{{PROFILE_IMAGE}}
+
+{{CORRIDOR_IMAGE}}
+
+{{PARETO_IMAGE}}
+
+==================================================
+
+10. Conclusions
+
+{{CONCLUSION}}
+
+==================================================
+
+Generated Automatically by CDT-ROP

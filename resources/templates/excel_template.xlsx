@@ -1,0 +1,111 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+# --------------------
+# Project
+# --------------------
+
+ws = wb.active
+ws.title = "Project"
+
+ws.append([
+    "Project Name",
+    "Project ID",
+    "Designer",
+    "Client",
+    "Coordinate System",
+    "Unit System",
+    "Design Standard",
+    "Description"
+])
+
+# --------------------
+# Alignment
+# --------------------
+
+ws = wb.create_sheet("Alignment")
+
+ws.append([
+    "Station",
+    "X",
+    "Y",
+    "Z",
+    "Radius",
+    "Curve Type",
+    "Element Type",
+    "Remark"
+])
+
+# --------------------
+# Terrain
+# --------------------
+
+ws = wb.create_sheet("Terrain")
+
+ws.append([
+    "Point ID",
+    "X",
+    "Y",
+    "Z"
+])
+
+# --------------------
+# Traffic
+# --------------------
+
+ws = wb.create_sheet("Traffic")
+
+ws.append([
+    "Station",
+    "AADT",
+    "DHV",
+    "PHF",
+    "Heavy Vehicle %",
+    "Design Speed",
+    "LOS"
+])
+
+# --------------------
+# Weather
+# --------------------
+
+ws = wb.create_sheet("Weather")
+
+ws.append([
+    "Date",
+    "Time",
+    "Temperature (°C)",
+    "Rainfall (mm)",
+    "Humidity (%)",
+    "Wind Speed (m/s)"
+])
+
+# --------------------
+# Cost
+# --------------------
+
+ws = wb.create_sheet("Cost")
+
+ws.append([
+    "Item Code",
+    "Description",
+    "Quantity",
+    "Unit",
+    "Unit Rate",
+    "Total"
+])
+
+# --------------------
+# Optimization
+# --------------------
+
+ws = wb.create_sheet("Optimization")
+
+ws.append([
+    "Objective",
+    "Weight",
+    "Enabled"
+])
+
+wb.save("resources/templates/excel_template.xlsx")

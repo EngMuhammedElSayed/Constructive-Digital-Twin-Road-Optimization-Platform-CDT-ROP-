@@ -1,0 +1,19 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+ws = wb.active
+ws.title = "Project"
+
+ws.append([
+    "Project Name",
+    "Project ID",
+    "Designer",
+    "Client",
+    "Coordinate System",
+    "Unit System",
+    "Design Standard",
+    "Description"
+])
+
+wb.save("resources/templates/project_template.xlsx")

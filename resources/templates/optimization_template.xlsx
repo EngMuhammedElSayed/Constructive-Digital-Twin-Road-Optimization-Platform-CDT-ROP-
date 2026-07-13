@@ -1,0 +1,14 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+ws = wb.active
+ws.title = "Optimization"
+
+ws.append([
+    "Objective",
+    "Weight",
+    "Enabled"
+])
+
+wb.save("resources/templates/optimization_template.xlsx")

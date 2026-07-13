@@ -1,0 +1,260 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cdt-rop.org/schema/alignment.schema.json",
+
+  "title": "Road Alignment",
+
+  "description": "Canonical schema describing a horizontal road alignment used throughout CDT-ROP.",
+
+  "type": "object",
+
+  "required": [
+    "metadata",
+    "alignment"
+  ],
+
+  "properties": {
+
+    "metadata": {
+
+      "type": "object",
+
+      "required": [
+        "project_name",
+        "coordinate_system",
+        "units"
+      ],
+
+      "properties": {
+
+        "project_name": {
+          "type": "string"
+        },
+
+        "designer": {
+          "type": "string"
+        },
+
+        "coordinate_system": {
+          "type": "string"
+        },
+
+        "units": {
+
+          "type": "object",
+
+          "properties": {
+
+            "length": {
+              "type": "string"
+            },
+
+            "elevation": {
+              "type": "string"
+            },
+
+            "angle": {
+              "type": "string"
+            }
+
+          }
+
+        }
+
+      }
+
+    },
+
+    "alignment": {
+
+      "type": "object",
+
+      "required": [
+
+        "name",
+
+        "start_station",
+
+        "end_station",
+
+        "elements"
+
+      ],
+
+      "properties": {
+
+        "name": {
+
+          "type": "string"
+
+        },
+
+        "description": {
+
+          "type": "string"
+
+        },
+
+        "start_station": {
+
+          "type": "number"
+
+        },
+
+        "end_station": {
+
+          "type": "number"
+
+        },
+
+        "design_speed": {
+
+          "type": "number"
+
+        },
+
+        "elements": {
+
+          "type": "array",
+
+          "items": {
+
+            "$ref": "#/$defs/alignmentElement"
+
+          }
+
+        }
+
+      }
+
+    }
+
+  },
+
+  "$defs": {
+
+    "alignmentElement": {
+
+      "type": "object",
+
+      "required": [
+
+        "type",
+
+        "start_station",
+
+        "end_station"
+
+      ],
+
+      "properties": {
+
+        "id": {
+
+          "type": "string"
+
+        },
+
+        "type": {
+
+          "enum": [
+
+            "tangent",
+
+            "circular_curve",
+
+            "spiral",
+
+            "spiral_curve_spiral"
+
+          ]
+
+        },
+
+        "start_station": {
+
+          "type": "number"
+
+        },
+
+        "end_station": {
+
+          "type": "number"
+
+        },
+
+        "length": {
+
+          "type": "number"
+
+        },
+
+        "radius": {
+
+          "type": [
+
+            "number",
+
+            "null"
+
+          ]
+
+        },
+
+        "start_point": {
+
+          "$ref": "#/$defs/point3D"
+
+        },
+
+        "end_point": {
+
+          "$ref": "#/$defs/point3D"
+
+        }
+
+      }
+
+    },
+
+    "point3D": {
+
+      "type": "object",
+
+      "required": [
+
+        "x",
+
+        "y",
+
+        "z"
+
+      ],
+
+      "properties": {
+
+        "x": {
+
+          "type": "number"
+
+        },
+
+        "y": {
+
+          "type": "number"
+
+        },
+
+        "z": {
+
+          "type": "number"
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

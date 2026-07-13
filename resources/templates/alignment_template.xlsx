@@ -1,0 +1,19 @@
+from openpyxl import Workbook
+
+wb = Workbook()
+
+ws = wb.active
+ws.title = "Alignment"
+
+ws.append([
+    "Station",
+    "X",
+    "Y",
+    "Z",
+    "Radius",
+    "Curve Type",
+    "Element Type",
+    "Remark"
+])
+
+wb.save("resources/templates/alignment_template.xlsx")

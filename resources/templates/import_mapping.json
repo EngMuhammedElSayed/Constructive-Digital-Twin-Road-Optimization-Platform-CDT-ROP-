@@ -1,0 +1,183 @@
+{
+  "version": "1.0.0",
+  "description": "Central import registry for all CDT-ROP data sources.",
+
+  "templates": [
+    {
+      "name": "Project",
+      "model": "Project",
+      "schema": "project.schema.json",
+      "destination": "src/models/project",
+      "supported_sources": [
+        {
+          "type": "xlsx",
+          "file": "project_template.xlsx",
+          "sheet": "Project"
+        },
+        {
+          "type": "json",
+          "schema": "project.schema.json"
+        },
+        {
+          "type": "api"
+        }
+      ]
+    },
+
+    {
+      "name": "Alignment",
+      "model": "Alignment",
+      "schema": "alignment.schema.json",
+      "destination": "src/models/alignment",
+      "supported_sources": [
+        {
+          "type": "xlsx",
+          "file": "alignment_template.xlsx",
+          "sheet": "Alignment"
+        },
+        {
+          "type": "csv",
+          "file": "alignment_points.csv"
+        },
+        {
+          "type": "landxml",
+          "file": "sample_landxml.xml"
+        },
+        {
+          "type": "civil3d",
+          "file": "sample_alignment.xml"
+        },
+        {
+          "type": "openroads"
+        },
+        {
+          "type": "json"
+        },
+        {
+          "type": "api"
+        }
+      ]
+    },
+
+    {
+      "name": "Terrain",
+      "model": "Terrain",
+      "schema": "terrain.schema.json",
+      "destination": "src/models/terrain",
+      "supported_sources": [
+        {
+          "type": "xlsx",
+          "file": "terrain_template.xlsx",
+          "sheet": "Terrain"
+        },
+        {
+          "type": "csv"
+        },
+        {
+          "type": "landxml"
+        },
+        {
+          "type": "civil3d"
+        },
+        {
+          "type": "openroads"
+        },
+        {
+          "type": "json"
+        },
+        {
+          "type": "api"
+        }
+      ]
+    },
+
+    {
+      "name": "Traffic",
+      "model": "Traffic",
+      "schema": "traffic.schema.json",
+      "destination": "src/models/traffic",
+      "supported_sources": [
+        {
+          "type": "xlsx",
+          "file": "traffic_template.xlsx",
+          "sheet": "Traffic"
+        },
+        {
+          "type": "csv"
+        },
+        {
+          "type": "json"
+        },
+        {
+          "type": "api"
+        }
+      ]
+    },
+
+    {
+      "name": "Weather",
+      "model": "Weather",
+      "schema": "weather.schema.json",
+      "destination": "src/models/weather",
+      "supported_sources": [
+        {
+          "type": "xlsx",
+          "file": "weather_template.xlsx",
+          "sheet": "Weather_Data"
+        },
+        {
+          "type": "csv"
+        },
+        {
+          "type": "json"
+        },
+        {
+          "type": "api"
+        }
+      ]
+    },
+
+    {
+      "name": "Cost",
+      "model": "Cost",
+      "schema": "cost.schema.json",
+      "destination": "src/models/cost",
+      "supported_sources": [
+        {
+          "type": "xlsx",
+          "file": "cost_template.xlsx",
+          "sheet": "Cost"
+        },
+        {
+          "type": "csv"
+        },
+        {
+          "type": "json"
+        },
+        {
+          "type": "api"
+        }
+      ]
+    },
+
+    {
+      "name": "Optimization",
+      "model": "Optimization",
+      "schema": "optimization.schema.json",
+      "destination": "src/models/optimization",
+      "supported_sources": [
+        {
+          "type": "xlsx",
+          "file": "optimization_template.xlsx",
+          "sheet": "Optimization"
+        },
+        {
+          "type": "json"
+        },
+        {
+          "type": "api"
+        }
+      ]
+    }
+  ]
+}
