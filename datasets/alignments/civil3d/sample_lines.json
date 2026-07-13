@@ -1,0 +1,11 @@
+{
+    "sample_line_group": "Cross Sections",
+    "interval": 20,
+    "stations": [
+        0,
+        20,
+        40,
+        60,
+        80
+    ]
+}
