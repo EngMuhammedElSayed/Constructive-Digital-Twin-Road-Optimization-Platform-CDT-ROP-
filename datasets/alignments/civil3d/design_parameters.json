@@ -1,9 +1,0 @@
-{
-    "design_speed": 100,
-    "lane_width": 3.6,
-    "shoulder_width": 2.5,
-    "median_width": 5.0,
-    "superelevation": 0.06,
-    "maximum_grade": 5,
-    "minimum_radius": 450
-}
