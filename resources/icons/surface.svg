@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="64"
+    height="64"
+    viewBox="0 0 64 64">
+
+    <defs>
+        <style>
+            .mesh{
+                fill:none;
+                stroke:#2C3E50;
+                stroke-width:2.8;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .node{
+                fill:#27AE60;
+            }
+
+            .edge{
+                fill:none;
+                stroke:#2980B9;
+                stroke-width:2;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+        </style>
+    </defs>
+
+    <!-- Outer Boundary -->
+    <path
+        class="mesh"
+        d="M10 46
+           L22 18
+           L42 14
+           L54 34
+           L46 50
+           Z"/>
+
+    <!-- TIN Edges -->
+    <line class="edge" x1="10" y1="46" x2="22" y2="18"/>
+    <line class="edge" x1="22" y1="18" x2="42" y2="14"/>
+    <line class="edge" x1="42" y1="14" x2="54" y2="34"/>
+    <line class="edge" x1="54" y1="34" x2="46" y2="50"/>
+    <line class="edge" x1="46" y1="50" x2="10" y2="46"/>
+
+    <line class="edge" x1="10" y1="46" x2="42" y2="14"/>
+    <line class="edge" x1="22" y1="18" x2="46" y2="50"/>
+    <line class="edge" x1="22" y1="18" x2="54" y2="34"/>
+    <line class="edge" x1="10" y1="46" x2="54" y2="34"/>
+
+    <!-- Nodes -->
+    <circle class="node" cx="10" cy="46" r="2.3"/>
+    <circle class="node" cx="22" cy="18" r="2.3"/>
+    <circle class="node" cx="42" cy="14" r="2.3"/>
+    <circle class="node" cx="54" cy="34" r="2.3"/>
+    <circle class="node" cx="46" cy="50" r="2.3"/>
+
+</svg>

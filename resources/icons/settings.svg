@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="64"
+    height="64"
+    viewBox="0 0 64 64">
+
+    <defs>
+        <style>
+            .gear{
+                fill:none;
+                stroke:#2C3E50;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .slider{
+                fill:none;
+                stroke:#2980B9;
+                stroke-width:3;
+                stroke-linecap:round;
+            }
+
+            .knob{
+                fill:#27AE60;
+            }
+        </style>
+    </defs>
+
+    <!-- Gear -->
+    <circle class="gear" cx="22" cy="22" r="8"/>
+
+    <path class="gear"
+          d="M22 8 V12
+             M22 32 V36
+             M8 22 H12
+             M32 22 H36
+             M12.5 12.5 L15.5 15.5
+             M28.5 28.5 L31.5 31.5
+             M12.5 31.5 L15.5 28.5
+             M28.5 15.5 L31.5 12.5"/>
+
+    <!-- Sliders -->
+    <line class="slider" x1="42" y1="18" x2="56" y2="18"/>
+    <circle class="knob" cx="48" cy="18" r="2.5"/>
+
+    <line class="slider" x1="42" y1="30" x2="56" y2="30"/>
+    <circle class="knob" cx="52" cy="30" r="2.5"/>
+
+    <line class="slider" x1="42" y1="42" x2="56" y2="42"/>
+    <circle class="knob" cx="46" cy="42" r="2.5"/>
+
+</svg>

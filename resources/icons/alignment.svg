@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="64"
+    height="64"
+    viewBox="0 0 64 64">
+
+    <defs>
+        <style>
+            .road {
+                fill: none;
+                stroke: #2C3E50;
+                stroke-width: 6;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+
+            .centerline {
+                fill: none;
+                stroke: #F1C40F;
+                stroke-width: 2.5;
+                stroke-dasharray: 5 5;
+            }
+        </style>
+    </defs>
+
+    <!-- Road -->
+    <path
+        class="road"
+        d="M10 54
+           C20 40 22 20 32 18
+           C42 16 46 36 54 10"/>
+
+    <!-- Center Line -->
+    <path
+        class="centerline"
+        d="M10 54
+           C20 40 22 20 32 18
+           C42 16 46 36 54 10"/>
+
+</svg>

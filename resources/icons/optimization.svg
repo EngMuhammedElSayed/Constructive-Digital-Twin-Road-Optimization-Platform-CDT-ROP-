@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="64"
+    height="64"
+    viewBox="0 0 64 64">
+
+    <defs>
+        <style>
+            .axis{
+                fill:none;
+                stroke:#2C3E50;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .pareto{
+                fill:none;
+                stroke:#27AE60;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .point{
+                fill:#2C3E50;
+            }
+
+            .arrow{
+                fill:none;
+                stroke:#F39C12;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+        </style>
+    </defs>
+
+    <!-- Axes -->
+    <line class="axis" x1="12" y1="52" x2="52" y2="52"/>
+    <line class="axis" x1="12" y1="52" x2="12" y2="12"/>
+
+    <!-- Pareto Front -->
+    <path
+        class="pareto"
+        d="M16 46
+           C22 40 28 34 34 28
+           C40 23 46 19 50 16"/>
+
+    <!-- Solutions -->
+    <circle class="point" cx="16" cy="46" r="2.8"/>
+    <circle class="point" cx="24" cy="39" r="2.8"/>
+    <circle class="point" cx="32" cy="31" r="2.8"/>
+    <circle class="point" cx="40" cy="24" r="2.8"/>
+    <circle class="point" cx="50" cy="16" r="2.8"/>
+
+    <!-- Optimization Arrow -->
+    <path
+        class="arrow"
+        d="M24 46
+           L36 34
+           L34 40
+           M36 34
+           L30 36"/>
+
+</svg>

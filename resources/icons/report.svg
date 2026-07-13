@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="64"
+    height="64"
+    viewBox="0 0 64 64">
+
+    <defs>
+        <style>
+            .outline{
+                fill:none;
+                stroke:#2C3E50;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .chart{
+                fill:none;
+                stroke:#2980B9;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .check{
+                fill:none;
+                stroke:#27AE60;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+        </style>
+    </defs>
+
+    <!-- Document -->
+    <path
+        class="outline"
+        d="M16 8
+           H40
+           L50 18
+           V56
+           H16
+           Z"/>
+
+    <!-- Folded Corner -->
+    <path
+        class="outline"
+        d="M40 8
+           V18
+           H50"/>
+
+    <!-- Chart -->
+    <line class="chart" x1="24" y1="44" x2="24" y2="34"/>
+    <line class="chart" x1="32" y1="44" x2="32" y2="28"/>
+    <line class="chart" x1="40" y1="44" x2="40" y2="22"/>
+
+    <!-- Check -->
+    <path
+        class="check"
+        d="M22 50
+           L28 56
+           L42 42"/>
+
+</svg>

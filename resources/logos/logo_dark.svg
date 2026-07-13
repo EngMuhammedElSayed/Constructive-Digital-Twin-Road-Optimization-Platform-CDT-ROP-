@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="512"
+    height="512"
+    viewBox="0 0 512 512">
+
+    <defs>
+
+        <linearGradient id="roadGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%">
+
+            <stop offset="0%" stop-color="#3498DB"/>
+
+            <stop offset="100%" stop-color="#2980B9"/>
+
+        </linearGradient>
+
+    </defs>
+
+    <!-- Background -->
+
+    <rect
+        width="512"
+        height="512"
+        rx="60"
+        fill="#0F172A"/>
+
+    <!-- C -->
+
+    <path
+
+        d="
+
+        M360 120
+
+        C300 70 190 70 125 140
+
+        C70 200 70 312 125 372
+
+        C190 442 300 442 360 392
+
+        "
+
+        fill="none"
+
+        stroke="#E2E8F0"
+
+        stroke-width="34"
+
+        stroke-linecap="round"
+
+        stroke-linejoin="round"/>
+
+    <!-- Road -->
+
+    <path
+
+        d="
+
+        M160 340
+
+        C205 285 250 235 310 180
+
+        "
+
+        fill="none"
+
+        stroke="url(#roadGradient)"
+
+        stroke-width="20"
+
+        stroke-linecap="round"/>
+
+    <!-- Center Line -->
+
+    <path
+
+        d="
+
+        M160 340
+
+        C205 285 250 235 310 180
+
+        "
+
+        fill="none"
+
+        stroke="#FACC15"
+
+        stroke-width="6"
+
+        stroke-dasharray="14 10"
+
+        stroke-linecap="round"/>
+
+    <!-- Digital Twin Nodes -->
+
+    <circle cx="160" cy="340" r="8" fill="#22C55E"/>
+
+    <circle cx="205" cy="286" r="8" fill="#22C55E"/>
+
+    <circle cx="255" cy="234" r="8" fill="#22C55E"/>
+
+    <circle cx="310" cy="180" r="8" fill="#22C55E"/>
+
+</svg>

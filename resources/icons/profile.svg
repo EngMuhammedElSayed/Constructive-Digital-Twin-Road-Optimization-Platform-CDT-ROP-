@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="64"
+    height="64"
+    viewBox="0 0 64 64">
+
+    <defs>
+        <style>
+            .axis{
+                fill:none;
+                stroke:#2C3E50;
+                stroke-width:3;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .ground{
+                fill:none;
+                stroke:#7F8C8D;
+                stroke-width:2.5;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .profile{
+                fill:none;
+                stroke:#2980B9;
+                stroke-width:3.5;
+                stroke-linecap:round;
+                stroke-linejoin:round;
+            }
+
+            .pvi{
+                fill:#E74C3C;
+            }
+        </style>
+    </defs>
+
+    <!-- Axes -->
+    <line class="axis" x1="10" y1="52" x2="56" y2="52"/>
+    <line class="axis" x1="10" y1="52" x2="10" y2="10"/>
+
+    <!-- Existing Ground -->
+    <path
+        class="ground"
+        d="M10 42
+           L18 39
+           L26 41
+           L34 35
+           L42 37
+           L50 31
+           L56 33"/>
+
+    <!-- Finished Grade -->
+    <path
+        class="profile"
+        d="M10 38
+           Q22 30 34 28
+           T56 18"/>
+
+    <!-- PVIs -->
+    <circle class="pvi" cx="22" cy="30" r="2.5"/>
+    <circle class="pvi" cx="34" cy="28" r="2.5"/>
+    <circle class="pvi" cx="46" cy="22" r="2.5"/>
+
+</svg>
