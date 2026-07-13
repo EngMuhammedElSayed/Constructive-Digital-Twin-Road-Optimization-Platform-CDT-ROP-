@@ -1,0 +1,10 @@
+{
+    "project_name": "Sample Highway Project",
+    "project_number": "CDT-001",
+    "designer": "Eng. Muhammed",
+    "client": "",
+    "country": "Egypt",
+    "design_standard": "AASHTO",
+    "coordinate_system": "WGS84",
+    "units": "Metric"
+}
