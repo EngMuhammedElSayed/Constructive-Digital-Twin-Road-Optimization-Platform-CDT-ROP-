@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LandXML
+    xmlns="http://www.landxml.org/schema/LandXML-1.2"
+    version="1.2">
+
+    <Project
+        name=""
+        desc=""
+    />
+
+    <Units>
+        <Metric
+            linearUnit="meter"
+            areaUnit="squareMeter"
+            volumeUnit="cubicMeter"
+            temperatureUnit="celsius"
+            pressureUnit="milliBars"
+            diameterUnit="millimeter"
+            angularUnit="decimal degrees"
+        />
+    </Units>
+
+    <Alignments>
+
+    </Alignments>
+
+    <Surfaces>
+
+    </Surfaces>
+
+</LandXML>
