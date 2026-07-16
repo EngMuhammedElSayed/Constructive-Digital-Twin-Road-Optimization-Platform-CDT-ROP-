@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "country": "Egypt",
+    "currency": "EGP"
+  },
+
+  "earthwork": {
+    "excavation": {
+      "id": "EW001",
+      "name": "Excavation",
+      "unit": "m3",
+      "default_rate": null,
+      "editable": true
+    },
+    "embankment": {
+      "id": "EW002",
+      "name": "Embankment",
+      "unit": "m3",
+      "default_rate": null,
+      "editable": true
+    },
+    "haul": {
+      "id": "EW003",
+      "name": "Hauling",
+      "unit": "m3.km",
+      "default_rate": null,
+      "editable": true
+    }
+  },
+
+  "bridge": {
+    "concrete": {
+      "id": "BR001",
+      "name": "Structural Concrete",
+      "unit": "m3",
+      "default_rate": null,
+      "editable": true
+    },
+    "reinforcement": {
+      "id": "BR002",
+      "name": "Reinforcement Steel",
+      "unit": "ton",
+      "default_rate": null,
+      "editable": true
+    }
+  }
+}

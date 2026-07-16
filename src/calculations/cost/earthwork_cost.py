@@ -1,94 +1,282 @@
 """
-Earthwork Cost Calculation
+earthwork_cost.py
+=================
 
-Constructive Digital Twin Road Optimization Platform (CDT-ROP)
+Earthwork Cost Calculation Engine
 
-This module calculates earthwork costs using previously computed
-earthwork quantities.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-Author:
-Eng. Muhammed
-
-Research:
-MSc Research
-Cairo University
+Author : CDT-ROP Team
+Version: 2.0.0
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
+from typing import Dict
 
-from models.cost.cost_parameters import CostParameters
+from .cost_database import CostDatabase
 
 
-@dataclass
-class EarthworkCostResult:
+# ============================================================
+# Input Models
+# ============================================================
+
+@dataclass(slots=True)
+class EarthworkQuantities:
     """
-    Stores earthwork cost calculation results.
+    Earthwork quantities computed by the earthwork engine.
     """
 
-    cut_cost: float
+    cut_volume: float
+    fill_volume: float
 
-    fill_cost: float
+    disposal_volume: float = 0.0
+    borrow_volume: float = 0.0
 
-    borrow_cost: float
+    average_haul_distance: float = 0.0
 
-    unsuitable_material_cost: float
 
-    haul_cost: float
+@dataclass(slots=True)
+class CostFactors:
+    """
+    Project adjustment factors.
+    """
 
-    total_cost: float
+    contingency: float = 0.0
+    inflation: float = 0.0
+    overhead: float = 0.0
+    profit: float = 0.0
+    tax: float = 0.0
 
+
+# ============================================================
+# Calculator
+# ============================================================
 
 class EarthworkCostCalculator:
-    """
-    Calculates total earthwork cost.
 
-    This class assumes that all earthwork volumes have already been
-    computed by the Earthwork Volume Engine.
-    """
+    def __init__(
 
-    def __init__(self, cost: CostParameters):
-
-        self.cost = cost
-
-    def calculate(
         self,
-        cut_volume: float,
-        fill_volume: float,
-        borrow_volume: float = 0.0,
-        unsuitable_volume: float = 0.0,
-        haul_distance_km: float = 0.0,
-    ) -> EarthworkCostResult:
 
-        cut_cost = cut_volume * self.cost.cut_cost_per_m3
+        quantities: EarthworkQuantities,
 
-        fill_cost = fill_volume * self.cost.fill_cost_per_m3
+        cost_database: CostDatabase,
 
-        borrow_cost = borrow_volume * self.cost.borrow_material_cost_per_m3
+        factors: CostFactors | None = None
 
-        unsuitable_cost = (
-            unsuitable_volume *
-            self.cost.unsuitable_material_cost_per_m3
+    ):
+
+        self.quantities = quantities
+        self.db = cost_database
+        self.factors = factors or CostFactors()
+
+    # ========================================================
+    # Unit Rates
+    # ========================================================
+
+    @property
+    def excavation_rate(self):
+
+        return self.db.get_rate(
+            "earthwork",
+            "Excavation"
         )
 
-        haul_cost = (
-            cut_volume *
-            haul_distance_km *
-            self.cost.haul_cost_per_m3_km
+    @property
+    def embankment_rate(self):
+
+        return self.db.get_rate(
+            "earthwork",
+            "Embankment"
         )
 
-        total = (
-            cut_cost +
-            fill_cost +
-            borrow_cost +
-            unsuitable_cost +
-            haul_cost
+    @property
+    def hauling_rate(self):
+
+        return self.db.get_rate(
+            "earthwork",
+            "Hauling"
         )
 
-        return EarthworkCostResult(
-            cut_cost=cut_cost,
-            fill_cost=fill_cost,
-            borrow_cost=borrow_cost,
-            unsuitable_material_cost=unsuitable_cost,
-            haul_cost=haul_cost,
-            total_cost=total
+    @property
+    def disposal_rate(self):
+
+        return self.db.get_rate(
+            "earthwork",
+            "Disposal"
         )
+
+    @property
+    def borrow_rate(self):
+
+        return self.db.get_rate(
+            "earthwork",
+            "Borrow Material"
+        )
+
+    # ========================================================
+    # Cost Items
+    # ========================================================
+
+    @property
+    def excavation_cost(self):
+
+        return (
+            self.quantities.cut_volume
+            * self.excavation_rate
+        )
+
+    @property
+    def embankment_cost(self):
+
+        return (
+            self.quantities.fill_volume
+            * self.embankment_rate
+        )
+
+    @property
+    def hauling_cost(self):
+
+        transported = max(
+
+            self.quantities.cut_volume,
+
+            self.quantities.fill_volume
+
+        )
+
+        return (
+
+            transported
+
+            * self.quantities.average_haul_distance
+
+            * self.hauling_rate
+
+        )
+
+    @property
+    def disposal_cost(self):
+
+        return (
+
+            self.quantities.disposal_volume
+
+            * self.disposal_rate
+
+        )
+
+    @property
+    def borrow_cost(self):
+
+        return (
+
+            self.quantities.borrow_volume
+
+            * self.borrow_rate
+
+        )
+
+    # ========================================================
+    # Totals
+    # ========================================================
+
+    @property
+    def direct_cost(self):
+
+        return (
+
+            self.excavation_cost
+
+            + self.embankment_cost
+
+            + self.hauling_cost
+
+            + self.disposal_cost
+
+            + self.borrow_cost
+
+        )
+
+    @property
+    def indirect_cost(self):
+
+        return (
+
+            self.direct_cost
+
+            * (
+
+                self.factors.contingency
+
+                + self.factors.inflation
+
+                + self.factors.overhead
+
+                + self.factors.profit
+
+            )
+
+        )
+
+    @property
+    def subtotal(self):
+
+        return self.direct_cost + self.indirect_cost
+
+    @property
+    def tax(self):
+
+        return self.subtotal * self.factors.tax
+
+    @property
+    def total_cost(self):
+
+        return self.subtotal + self.tax
+
+    # ========================================================
+    # Summary
+    # ========================================================
+
+    def summary(self) -> Dict:
+
+        return {
+
+            "currency": self.db.currency,
+
+            "cut_volume": self.quantities.cut_volume,
+
+            "fill_volume": self.quantities.fill_volume,
+
+            "excavation_rate": self.excavation_rate,
+
+            "embankment_rate": self.embankment_rate,
+
+            "hauling_rate": self.hauling_rate,
+
+            "disposal_rate": self.disposal_rate,
+
+            "borrow_rate": self.borrow_rate,
+
+            "excavation_cost": self.excavation_cost,
+
+            "embankment_cost": self.embankment_cost,
+
+            "hauling_cost": self.hauling_cost,
+
+            "disposal_cost": self.disposal_cost,
+
+            "borrow_cost": self.borrow_cost,
+
+            "direct_cost": self.direct_cost,
+
+            "indirect_cost": self.indirect_cost,
+
+            "tax": self.tax,
+
+            "total_cost": self.total_cost
+
+        }

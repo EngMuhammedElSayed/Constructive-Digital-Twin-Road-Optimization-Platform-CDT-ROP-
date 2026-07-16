@@ -1,64 +1,164 @@
 """
-Horizontal Sightline Offset (HSO) Calculator
+hso.py
+======
 
-Constructive Digital Twin Road Optimization Platform (CDT-ROP)
+Horizontal Sightline Offset (HSO)
 
-This module calculates the required Horizontal Sightline Offset (HSO)
-for horizontal curves according to the AASHTO Green Book.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-Author:
-Eng. Muhammed
+Based on:
+AASHTO Green Book
 
-Research:
-MSc Research
-Cairo University
+Author : CDT-ROP Team
+Version: 2.0.0
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
-import math
+from math import cos, radians
 
 
-@dataclass
-class HSOResult:
+# ==========================================================
+# Input Model
+# ==========================================================
+
+@dataclass(slots=True)
+class HSOInput:
     """
-    Stores Horizontal Sightline Offset calculation results.
+    Horizontal Sightline Offset Input
+
+    Parameters
+    ----------
+    curve_radius : float
+        Radius of horizontal curve (m)
+
+    curve_length : float
+        Length of horizontal curve (m)
+
+    sight_distance : float
+        Required sight distance (SSD / PSD / DSD) (m)
+
+    central_angle : float
+        Curve central angle (degree)
     """
 
-    radius: float
+    curve_radius: float
 
-    stopping_sight_distance: float
+    curve_length: float
 
-    horizontal_sightline_offset: float
+    sight_distance: float
 
-    satisfies_requirement: bool
+    central_angle: float
 
+
+# ==========================================================
+# Calculator
+# ==========================================================
 
 class HSOCalculator:
-    """
-    Calculates the required Horizontal Sightline Offset (HSO).
-    """
 
-    def calculate(
-        self,
-        radius: float,
-        stopping_sight_distance: float,
-        available_offset: float,
-    ) -> HSOResult:
+    def __init__(self, data: HSOInput):
 
-        # Central angle (degrees)
-        theta = 28.65 * stopping_sight_distance / radius
+        self.data = data
 
-        # Convert to radians
-        theta_rad = math.radians(theta)
+    # ------------------------------------------------------
 
-        # AASHTO Equation
-        hso = radius * (1 - math.cos(theta_rad))
+    @property
+    def radius(self):
 
-        satisfies = available_offset >= hso
+        return self.data.curve_radius
 
-        return HSOResult(
-            radius=radius,
-            stopping_sight_distance=stopping_sight_distance,
-            horizontal_sightline_offset=hso,
-            satisfies_requirement=satisfies,
-        )
+    # ------------------------------------------------------
+
+    @property
+    def length(self):
+
+        return self.data.curve_length
+
+    # ------------------------------------------------------
+
+    @property
+    def sight_distance(self):
+
+        return self.data.sight_distance
+
+    # ------------------------------------------------------
+
+    @property
+    def central_angle_rad(self):
+
+        return radians(self.data.central_angle)
+
+    # ------------------------------------------------------
+
+    @property
+    def case(self):
+
+        """
+        Determine AASHTO case.
+        """
+
+        if self.sight_distance <= self.length:
+
+            return "S <= L"
+
+        return "S > L"
+
+    # ------------------------------------------------------
+
+    @property
+    def required_hso(self):
+
+        """
+        Horizontal Sightline Offset
+
+        Case 1
+        -------
+        S <= L
+
+        M = R (1 - cos(S / 2R))
+
+        Case 2
+        -------
+        S > L
+
+        M = R (1 - cos((L / 2R) * (1 - (S - L)/S)))
+        """
+
+        R = self.radius
+
+        S = self.sight_distance
+
+        L = self.length
+
+        if S <= L:
+
+            theta = S / R
+
+            return R * (1 - cos(theta / 2))
+
+        theta = (L / R) * (1 - ((S - L) / S))
+
+        return R * (1 - cos(theta / 2))
+
+    # ------------------------------------------------------
+
+    def summary(self):
+
+        return {
+
+            "curve_radius": self.radius,
+
+            "curve_length": self.length,
+
+            "central_angle": self.data.central_angle,
+
+            "sight_distance": self.sight_distance,
+
+            "case": self.case,
+
+            "required_hso": self.required_hso
+
+        }

@@ -1,87 +1,196 @@
 """
-Stopping Sight Distance (SSD) Calculator
+ssd.py
+======
 
-Constructive Digital Twin Road Optimization Platform (CDT-ROP)
+Stopping Sight Distance (SSD)
 
-This module calculates the required Stopping Sight Distance (SSD)
-according to the AASHTO Green Book.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-Author:
-Eng. Muhammed
+Based on:
+AASHTO Green Book
 
-Research:
-MSc Research
-Cairo University
+Author : CDT-ROP Team
+Version: 3.0.0
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
+from typing import Dict
 
 
-@dataclass
-class SSDResult:
+# ==========================================================
+# Input Model
+# ==========================================================
+
+@dataclass(slots=True)
+class SSDInput:
     """
-    Stores SSD calculation results.
+    Stopping Sight Distance Input
+
+    speed : km/h
+
+    perception_reaction_time : sec
+
+    friction : decimal
+
+    grade : decimal
+        +0.03 = +3%
+        -0.04 = -4%
     """
 
-    design_speed: float
-
-    grade: float
+    speed: float
 
     perception_reaction_time: float
 
-    comfortable_deceleration: float
+    friction: float
 
-    stopping_sight_distance: float
+    grade: float = 0.0
 
+
+# ==========================================================
+# Calculator
+# ==========================================================
 
 class SSDCalculator:
-    """
-    Calculates the required Stopping Sight Distance (SSD)
-    using the AASHTO equation.
-    """
 
-    def calculate(
-        self,
-        design_speed: float,
-        grade: float,
-        perception_reaction_time: float = 2.5,
-        comfortable_deceleration: float = 3.4,
-    ) -> SSDResult:
+    def __init__(self, data: SSDInput):
 
-        # ------------------------------------------
-        # Perception-Reaction Distance
-        # ------------------------------------------
+        self.data = data
 
-        reaction_distance = (
-            0.278
-            * design_speed
-            * perception_reaction_time
-        )
+        self._validate()
 
-        # ------------------------------------------
-        # Braking Distance
-        # ------------------------------------------
+    # ------------------------------------------------------
 
-        braking_distance = (
-            design_speed ** 2
-        ) / (
-            254
-            * (
-                comfortable_deceleration / 9.81
-                + grade / 100
+    def _validate(self):
+
+        if self.data.speed <= 0:
+
+            raise ValueError(
+                "Speed must be greater than zero."
             )
+
+        if self.data.perception_reaction_time <= 0:
+
+            raise ValueError(
+                "Perception-reaction time must be greater than zero."
+            )
+
+        if self.data.friction <= 0:
+
+            raise ValueError(
+                "Friction coefficient must be greater than zero."
+            )
+
+        if self.data.grade < -0.15 or self.data.grade > 0.15:
+
+            raise ValueError(
+                "Grade should be between -15% and +15%."
+            )
+
+    # ------------------------------------------------------
+
+    @property
+    def reaction_distance(self) -> float:
+        """
+        Reaction Distance
+
+        RD = 0.278 × V × t
+        """
+
+        return (
+            0.278
+            * self.data.speed
+            * self.data.perception_reaction_time
         )
 
-        # ------------------------------------------
-        # Total SSD
-        # ------------------------------------------
+    # ------------------------------------------------------
 
-        ssd = reaction_distance + braking_distance
+    @property
+    def braking_distance(self) -> float:
+        """
+        Braking Distance
 
-        return SSDResult(
-            design_speed=design_speed,
-            grade=grade,
-            perception_reaction_time=perception_reaction_time,
-            comfortable_deceleration=comfortable_deceleration,
-            stopping_sight_distance=ssd,
+        BD = V² / (254(f + G))
+        """
+
+        denominator = 254 * (
+            self.data.friction
+            + self.data.grade
         )
+
+        if denominator <= 0:
+
+            raise ValueError(
+                "Invalid braking denominator."
+            )
+
+        return (
+            self.data.speed ** 2
+        ) / denominator
+
+    # ------------------------------------------------------
+
+    @property
+    def stopping_sight_distance(self) -> float:
+
+        return (
+
+            self.reaction_distance
+
+            + self.braking_distance
+
+        )
+
+    # ------------------------------------------------------
+
+    @property
+    def is_upgrade(self):
+
+        return self.data.grade > 0
+
+    # ------------------------------------------------------
+
+    @property
+    def is_downgrade(self):
+
+        return self.data.grade < 0
+
+    # ------------------------------------------------------
+
+    @property
+    def grade_percent(self):
+
+        return self.data.grade * 100
+
+    # ------------------------------------------------------
+
+    def summary(self) -> Dict:
+
+        return {
+
+            "speed_kmh": self.data.speed,
+
+            "perception_reaction_time_sec":
+                self.data.perception_reaction_time,
+
+            "friction":
+                self.data.friction,
+
+            "grade":
+                self.data.grade,
+
+            "grade_percent":
+                self.grade_percent,
+
+            "reaction_distance":
+                self.reaction_distance,
+
+            "braking_distance":
+                self.braking_distance,
+
+            "ssd":
+                self.stopping_sight_distance
+
+        }
