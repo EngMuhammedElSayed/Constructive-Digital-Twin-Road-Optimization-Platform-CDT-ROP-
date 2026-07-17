@@ -1,64 +1,110 @@
 """
-Project Data Model
+profile.py
+==========
 
-This module defines the root project object used throughout the
-Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Vertical Profile Domain Model
 
-Author:
-Eng. Muhammed
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-Research:
-MSc Research - Cairo University
+Represents a roadway vertical profile.
+
+This module contains engineering data only.
+No profile calculations are performed here.
+
+Author : CDT-ROP Team
+Version : 3.0.0
 """
 
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Optional
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
+from uuid import uuid4
 
 
-@dataclass
-class Project:
+@dataclass(slots=True)
+class Profile:
     """
-    Represents a complete road optimization project.
-
-    This is the root object that contains all project information.
-    Other engineering models such as Alignment, Surface,
-    Corridor, TrafficData, and CostParameters will be linked here.
+    Represents a roadway vertical profile.
     """
 
-    # -------------------------------------------------
-    # Basic Project Information
-    # -------------------------------------------------
+    # =====================================================
+    # Identity
+    # =====================================================
 
-    project_name: str
-    project_code: str
+    id: str = field(default_factory=lambda: str(uuid4()))
 
-    client: str
-    designer: str
-
-    country: str
-    design_standard: str
-
-    coordinate_system: str
+    name: str = ""
 
     description: str = ""
 
-    created_date: datetime = datetime.now()
+    # =====================================================
+    # References
+    # =====================================================
 
-    # -------------------------------------------------
-    # Engineering Models
-    # -------------------------------------------------
+    alignment_id: str = ""
 
-    surface: Optional[object] = None
+    surface_id: str = ""
 
-    alignment: Optional[object] = None
+    # =====================================================
+    # Stations
+    # =====================================================
 
-    corridor: Optional[object] = None
+    start_station: float = 0.0
 
-    road_geometry: Optional[object] = None
+    end_station: float = 0.0
 
-    traffic_data: Optional[object] = None
+    total_length_m: float = 0.0
 
-    cost_parameters: Optional[object] = None
+    # =====================================================
+    # Profile Geometry
+    # =====================================================
 
-    optimization_settings: Optional[object] = None
+    pv_is: List[Any] = field(default_factory=list)
+
+    tangents: List[Any] = field(default_factory=list)
+
+    vertical_curves: List[Any] = field(default_factory=list)
+
+    stations: List[Any] = field(default_factory=list)
+
+    # =====================================================
+    # Design Parameters
+    # =====================================================
+
+    maximum_grade_percent: float = 0.0
+
+    minimum_grade_percent: float = 0.0
+
+    minimum_crest_k: float = 0.0
+
+    minimum_sag_k: float = 0.0
+
+    # =====================================================
+    # Metadata
+    # =====================================================
+
+    source: str = ""
+
+    author: str = ""
+
+    version: str = "1.0"
+
+    properties: Dict[str, Any] = field(default_factory=dict)
+
+    # =====================================================
+    # Helper Properties
+    # =====================================================
+
+    @property
+    def pvi_count(self) -> int:
+        return len(self.pv_is)
+
+    @property
+    def tangent_count(self) -> int:
+        return len(self.tangents)
+
+    @property
+    def vertical_curve_count(self) -> int:
+        return len(self.vertical_curves)

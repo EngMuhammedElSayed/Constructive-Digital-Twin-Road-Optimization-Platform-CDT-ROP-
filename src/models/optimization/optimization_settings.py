@@ -1,119 +1,109 @@
 """
-Optimization Settings Data Model
+optimization_settings.py
+========================
 
-This module defines the optimization configuration used by the
-Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Optimization Settings Domain Model
 
-The class stores optimization parameters only.
-No optimization algorithm is implemented here.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-Author:
-Eng. Muhammed
+Defines optimization parameters used by optimization
+algorithms.
 
-Research:
-MSc Research - Cairo University
+This module contains configuration data only.
+
+Author : CDT-ROP Team
+Version : 3.0.0
 """
 
-from dataclasses import dataclass
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Dict, List
 
 
-@dataclass
+@dataclass(slots=True)
 class OptimizationSettings:
     """
-    Stores the optimization configuration for the project.
-
-    These parameters control the optimization engine and are
-    independent of the selected optimization algorithm.
+    Represents optimization algorithm settings.
     """
-    # -------------------------------------------------
-    # Design Variables
-    # -------------------------------------------------
 
-    optimize_horizontal_radius: bool = True
-
-    optimize_longitudinal_grade: bool = True
-
-    optimize_lane_width: bool = True
-
-    optimize_shoulder_width: bool = True
-
-    optimize_median_width: bool = True
-
-    optimize_superelevation: bool = True
-    # -------------------------------------------------
+    # =====================================================
     # General
-    # -------------------------------------------------
+    # =====================================================
 
     algorithm: str = "NSGA-II"
 
-    random_seed: int = 1
+    enabled: bool = True
 
-    verbose: bool = True
+    random_seed: int = 42
 
-    save_history: bool = True
-
-    # -------------------------------------------------
+    # =====================================================
     # Population
-    # -------------------------------------------------
+    # =====================================================
 
     population_size: int = 100
 
-    number_of_generations: int = 200
+    offspring_size: int = 100
 
-    number_of_offspring: int = 100
+    generations: int = 200
 
-    # -------------------------------------------------
-    # Genetic Operators
-    # -------------------------------------------------
+    # =====================================================
+    # Termination
+    # =====================================================
 
-    crossover_probability: float = 0.90
+    tolerance: float = 1e-6
 
-    crossover_eta: float = 15.0
+    maximum_runtime_sec: float = 3600.0
 
-    mutation_probability: float = 0.10
+    # =====================================================
+    # Objectives
+    # =====================================================
 
-    mutation_eta: float = 20.0
+    objective_names: List[str] = field(
+        default_factory=list
+    )
 
-    # -------------------------------------------------
+    objective_weights: Dict[str, float] = field(
+        default_factory=dict
+    )
+
+    # =====================================================
     # Constraints
-    # -------------------------------------------------
+    # =====================================================
 
-    eliminate_duplicates: bool = True
+    constraint_names: List[str] = field(
+        default_factory=list
+    )
 
-    repair_infeasible_solutions: bool = False
+    hard_constraints: bool = True
 
-    # -------------------------------------------------
-    # Multi-objective Settings
-    # -------------------------------------------------
+    penalty_factor: float = 1000.0
 
-objective_names = (
-    "Construction Cost",
-    "Safety Index",
-)
-
-constraint_names = (
-    "Minimum Curve Radius",
-    "Horizontal Sightline Offset",
-    "Traffic Capacity",
-    "Minimum Grade",
-)
-
-    # -------------------------------------------------
-    # Stopping Criteria
-    # -------------------------------------------------
-
-    termination_type: str = "n_gen"
-
-    termination_value: int = 200
-
-    # -------------------------------------------------
+    # =====================================================
     # Output
-    # -------------------------------------------------
+    # =====================================================
 
-    export_pareto_front: bool = True
+    save_history: bool = True
 
-    export_history: bool = True
+    save_pareto_front: bool = True
 
-    create_plots: bool = True
+    export_results: bool = True
 
-    export_reports: bool = True
+    # =====================================================
+    # Parallel Processing
+    # =====================================================
+
+    enable_parallel_processing: bool = False
+
+    number_of_workers: int = 1
+
+    # =====================================================
+    # Metadata
+    # =====================================================
+
+    version: str = "1.0"
+
+    properties: Dict[str, str] = field(
+        default_factory=dict
+    )

@@ -2,134 +2,177 @@
 workflow.py
 ===========
 
-Workflow Manager
+CDT-ROP Workflow Manager
 
-CDT-ROP
 Constructive Digital Twin Road Optimization Platform
 
+Defines the execution workflow of the CDT-ROP platform.
+
 Author : CDT-ROP Team
-Version: 3.0.0
+Version : 3.0.0
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Callable, List
+from abc import ABC, abstractmethod
+from typing import Any, Dict
 
 
 # ==========================================================
-# Workflow Step
+# Workflow Interface
 # ==========================================================
 
-@dataclass(slots=True)
-class WorkflowStep:
+class Workflow(ABC):
     """
-    Represents one execution step in the CDT-ROP workflow.
-    """
-
-    name: str
-
-    action: Callable
-
-    enabled: bool = True
-
-
-# ==========================================================
-# Workflow Manager
-# ==========================================================
-
-class Workflow:
-    """
-    Controls the execution order of the CDT-ROP platform.
-
-    This class contains no engineering calculations.
-    It only executes registered workflow steps.
+    Base interface for all CDT workflows.
     """
 
-    def __init__(self):
-
-        self.steps: List[WorkflowStep] = []
-
-    # ------------------------------------------------------
-
-    def add_step(
-
-        self,
-
-        name: str,
-
-        action: Callable,
-
-        enabled: bool = True
-
-    ):
-
-        self.steps.append(
-
-            WorkflowStep(
-
-                name=name,
-
-                action=action,
-
-                enabled=enabled
-
-            )
-
-        )
-
-    # ------------------------------------------------------
-
-    def remove_step(
-
-        self,
-
-        name: str
-
-    ):
-
-        self.steps = [
-
-            step
-
-            for step in self.steps
-
-            if step.name != name
-
-        ]
-
-    # ------------------------------------------------------
-
-    def run(self):
-
+    @abstractmethod
+    def execute(self) -> Dict[str, Any]:
         """
-        Execute all enabled workflow steps.
+        Execute the workflow.
         """
+        ...
 
-        for step in self.steps:
 
-            if not step.enabled:
+# ==========================================================
+# CDT Workflow
+# ==========================================================
 
-                continue
+class CDTWorkflow(Workflow):
+    """
+    Default CDT-ROP workflow.
 
-            print(f"Running: {step.name}")
+    Coordinates the execution order of all platform
+    components without implementing engineering logic.
+    """
 
-            step.action()
+    def __init__(self, engine) -> None:
 
-    # ------------------------------------------------------
+        self.engine = engine
 
-    def summary(self):
+    # ======================================================
 
-        return [
+    def execute(self) -> Dict[str, Any]:
 
-            {
+        self.initialize()
 
-                "name": step.name,
+        self.load_project()
 
-                "enabled": step.enabled
+        self.validate_project()
 
-            }
+        self.prepare_models()
 
-            for step in self.steps
+        self.run_geometry()
 
-        ]
+        self.run_traffic()
+
+        self.run_cost()
+
+        self.run_optimization()
+
+        self.update_digital_twin()
+
+        self.generate_reports()
+
+        self.export_results()
+
+        self.finish()
+
+        return self.engine.results
+
+    # ======================================================
+
+    def initialize(self) -> None:
+        """
+        Initialize workflow.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def load_project(self) -> None:
+        """
+        Load project data.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def validate_project(self) -> None:
+        """
+        Validate project inputs.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def prepare_models(self) -> None:
+        """
+        Prepare engineering models.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def run_geometry(self) -> None:
+        """
+        Execute geometry calculations.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def run_traffic(self) -> None:
+        """
+        Execute traffic calculations.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def run_cost(self) -> None:
+        """
+        Execute cost calculations.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def run_optimization(self) -> None:
+        """
+        Execute optimization engine.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def update_digital_twin(self) -> None:
+        """
+        Synchronize Digital Twin.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def generate_reports(self) -> None:
+        """
+        Generate engineering reports.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def export_results(self) -> None:
+        """
+        Export final project outputs.
+        """
+        raise NotImplementedError
+
+    # ======================================================
+
+    def finish(self) -> None:
+        """
+        Final cleanup.
+        """
+        raise NotImplementedError

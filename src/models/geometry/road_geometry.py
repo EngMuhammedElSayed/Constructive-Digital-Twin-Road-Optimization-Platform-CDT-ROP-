@@ -1,81 +1,107 @@
 """
-Road Geometry Data Model
+road_geometry.py
+================
 
-This module defines the roadway cross-section geometry used by the
-Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Road Geometry Domain Model
 
-The model stores geometric design parameters only.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
+
+Represents the complete roadway geometry model.
+
+This module aggregates all geometric components of
+a roadway project.
+
 No engineering calculations are performed here.
 
-Author:
-Eng. Muhammed
-
-Research:
-MSc Research - Cairo University
+Author : CDT-ROP Team
+Version : 3.0.0
 """
 
-from dataclasses import dataclass
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Dict
+from uuid import uuid4
+
+from src.models.geometry.alignment import Alignment
+from src.models.geometry.profile import Profile
+from src.models.geometry.corridor import Corridor
+from src.models.geometry.cross_section import CrossSection
 
 
-@dataclass
+@dataclass(slots=True)
 class RoadGeometry:
     """
-    Represents the typical roadway cross-section.
-
-    This class stores the geometric design parameters that define
-    the roadway layout.
+    Represents the complete roadway geometry.
     """
 
-    # -------------------------------------------------
-    # General
-    # -------------------------------------------------
+    # =====================================================
+    # Identity
+    # =====================================================
 
-    road_name: str = ""
+    id: str = field(default_factory=lambda: str(uuid4()))
 
-    road_classification: str = "Urban Freeway"
+    name: str = ""
 
-    design_speed: float = 90.0      # km/h
+    description: str = ""
 
-    # -------------------------------------------------
-    # Lane Configuration
-    # -------------------------------------------------
+    # =====================================================
+    # Main Geometry Components
+    # =====================================================
 
-    lanes_per_direction: int = 4
+    alignment: Alignment = field(default_factory=Alignment)
 
-    lane_width: float = 3.60        # m
+    profile: Profile = field(default_factory=Profile)
 
-    shoulder_width: float = 2.50    # m
+    corridor: Corridor = field(default_factory=Corridor)
 
-    median_width: float = 4.00      # m
+    cross_sections: list[CrossSection] = field(default_factory=list)
 
-    # -------------------------------------------------
-    # Cross Section
-    # -------------------------------------------------
+    # =====================================================
+    # Global Parameters
+    # =====================================================
 
-    cross_slope: float = 0.02
+    design_speed_kph: float = 90.0
 
-    maximum_superelevation: float = 0.06
+    total_length_m: float = 0.0
 
-    side_slope: float = 2.0         # H:V
+    station_start: float = 0.0
 
-    clear_zone_width: float = 6.00  # m
+    station_end: float = 0.0
 
-    # -------------------------------------------------
-    # Pavement
-    # -------------------------------------------------
+    coordinate_system: str = ""
 
-    pavement_width: float = 0.0
+    units: str = "Metric"
 
-    total_roadway_width: float = 0.0
+    # =====================================================
+    # Metadata
+    # =====================================================
 
-    # -------------------------------------------------
-    # Design Limits
-    # -------------------------------------------------
+    source: str = ""
 
-    minimum_lane_width: float = 3.00
+    author: str = ""
 
-    maximum_lane_width: float = 3.75
+    version: str = "1.0"
 
-    minimum_shoulder_width: float = 1.20
+    properties: Dict[str, str] = field(default_factory=dict)
 
-    maximum_shoulder_width: float = 3.00
+    # =====================================================
+    # Helper Properties
+    # =====================================================
+
+    @property
+    def cross_section_count(self) -> int:
+        return len(self.cross_sections)
+
+    @property
+    def has_alignment(self) -> bool:
+        return self.alignment is not None
+
+    @property
+    def has_profile(self) -> bool:
+        return self.profile is not None
+
+    @property
+    def has_corridor(self) -> bool:
+        return self.corridor is not None

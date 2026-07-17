@@ -1,75 +1,68 @@
-# Engine Module
+# CDT-ROP Engine
 
 ## Overview
 
-The **Engine** module is the orchestration layer of the CDT-ROP platform.
+The **Engine** is the orchestration layer of the Constructive Digital Twin Road Optimization Platform (CDT-ROP).
 
-It coordinates all major subsystems without performing engineering calculations itself.
+It coordinates the complete engineering workflow from project loading to optimization, report generation, and result export.
 
-The engine is responsible for controlling the complete workflow of the platform, from loading project data to generating optimization results and updating the Constructive Digital Twin.
+The engine **does not implement engineering equations** or optimization algorithms directly. Instead, it coordinates specialized modules across the platform.
 
 ---
 
 # Responsibilities
 
-The Engine Layer is responsible for:
+The engine is responsible for:
 
-- Loading project configuration
-- Loading engineering standards
-- Loading datasets
-- Initializing system modules
-- Coordinating calculation engines
-- Executing optimization workflows
-- Managing Digital Twin synchronization
-- Generating reports
-- Handling execution pipeline
-
-The Engine Layer **does not perform engineering calculations**.
+- Loading project data
+- Initializing the platform
+- Validating project inputs
+- Executing engineering calculations
+- Running optimization algorithms
+- Updating the Digital Twin
+- Managing workflow execution
+- Generating engineering reports
+- Exporting final results
 
 ---
 
-# Architecture
+# Engine Architecture
 
 ```text
-                 User Interface
-                        │
-                        ▼
-                 Application Engine
-                        │
-        ┌───────────────┼────────────────┐
-        │               │                │
-        ▼               ▼                ▼
- Validation        Calculation      Optimization
-                        │
-      ┌─────────────────┼─────────────────┐
-      ▼                 ▼                 ▼
- Geometry          Traffic            Pavement
-      ▼                 ▼                 ▼
- Earthwork         Cost            Digital Twin
-                        │
-                        ▼
-                    Reporting
+                User
+                  │
+                  ▼
+         CDTRoadOptimizationEngine
+                  │
+                  ▼
+             Workflow Manager
+                  │
+     ┌────────────┼────────────┐
+     ▼            ▼            ▼
+ Validation   Calculations  Optimization
+     │            │            │
+     └────────────┼────────────┘
+                  ▼
+          Digital Twin Update
+                  │
+                  ▼
+             Report Generator
+                  │
+                  ▼
+             Result Exporter
 ```
 
 ---
 
-# Directory Structure
+# Package Structure
 
 ```text
 engine/
 
-├── README.md
 ├── engine.py
-├── project_engine.py
-├── validation_engine.py
-├── geometry_engine.py
-├── traffic_engine.py
-├── earthwork_engine.py
-├── cost_engine.py
-├── optimization_engine.py
-├── digital_twin_engine.py
-├── report_engine.py
-└── pipeline.py
+├── solver.py
+├── workflow.py
+└── README.md
 ```
 
 ---
@@ -78,208 +71,145 @@ engine/
 
 ## engine.py
 
-Main application orchestrator.
+Main platform entry point.
 
-Coordinates the execution of all platform modules.
+Responsibilities:
 
----
-
-## project_engine.py
-
-Loads and manages project data.
-
-Responsibilities include:
-
-- Project initialization
-- Project lifecycle
-- Project metadata
+- Load project
+- Coordinate execution
+- Control workflow
+- Return results
 
 ---
 
-## validation_engine.py
+## workflow.py
 
-Executes all validation modules before calculations.
+Defines the execution sequence.
 
-Includes:
+Typical workflow:
 
-- Geometry validation
-- Traffic validation
-- Cost validation
-- Project validation
-
----
-
-## geometry_engine.py
-
-Coordinates all geometry calculations.
-
-Includes:
-
-- Horizontal Alignment
-- Vertical Alignment
-- SSD
-- HSO
-- Superelevation
-- Earthwork Geometry
+1. Load project
+2. Validate inputs
+3. Run calculations
+4. Run optimization
+5. Update Digital Twin
+6. Generate reports
+7. Export outputs
 
 ---
 
-## traffic_engine.py
+## solver.py
 
-Coordinates all traffic calculations.
+Provides access to optimization solvers.
 
-Includes:
-
-- Capacity
-- LOS
-- Delay
-- Queue
-- Speed
-- Safety
-
----
-
-## earthwork_engine.py
-
-Coordinates earthwork calculations.
-
-Includes:
-
-- Cut
-- Fill
-- Mass Haul
-- Balance
-
----
-
-## cost_engine.py
-
-Coordinates all project cost modules.
-
-Includes:
-
-- Earthwork Cost
-- Pavement Cost
-- Bridge Cost
-- Drainage Cost
-- Utility Cost
-- Traffic Cost
-- Environmental Cost
-- Life Cycle Cost
-
----
-
-## optimization_engine.py
-
-Controls optimization workflow.
-
-Supports:
+Future supported algorithms include:
 
 - NSGA-II
-- Future optimization algorithms
+- Genetic Algorithm
+- Particle Swarm Optimization
+- Simulated Annealing
+- MILP
+- Custom optimization methods
 
 ---
 
-## digital_twin_engine.py
+# Engine Workflow
 
-Updates the Constructive Digital Twin.
-
-Coordinates:
-
-- BIM
-- GIS
-- Databases
-- Synchronization
-- History
-
----
-
-## report_engine.py
-
-Generates project outputs.
-
-Supports:
-
-- PDF
-- Excel
-- HTML
-- LaTeX
-- JSON
-
----
-
-## pipeline.py
-
-Defines the execution workflow of the platform.
-
-Typical execution order:
-
-1. Load Configuration
-2. Load Standards
-3. Load Project
-4. Validate Inputs
-5. Run Geometry
-6. Run Traffic
-7. Run Earthwork
-8. Run Cost
-9. Run Optimization
-10. Update Digital Twin
-11. Generate Reports
-
----
-
-# Design Principles
-
-The Engine Layer follows these principles:
-
-- Single Responsibility Principle
-- Separation of Concerns
-- Modular Architecture
-- Dependency Injection
-- Configuration-Driven Execution
+```text
+Project
+   │
+   ▼
+Load
+   │
+   ▼
+Validation
+   │
+   ▼
+Engineering Calculations
+   │
+   ▼
+Optimization
+   │
+   ▼
+Digital Twin Update
+   │
+   ▼
+Reports
+   │
+   ▼
+Export
+```
 
 ---
 
 # Dependencies
 
-The Engine Layer depends on:
+The Engine coordinates the following modules:
 
 ```text
-config/
-core/
-calculations/
-standards/
-optimization/
-digital_twin/
-io/
-validation/
-reporting/
+src/config/
+
+src/models/
+
+src/interfaces/
+
+src/calculations/
+
+src/optimization/
+
+src/reporting/
+
+src/validation/
+
+src/utils/
 ```
 
-The Engine Layer should **not** contain:
+The engine should never contain:
 
 - Engineering equations
-- Design standards
-- Optimization mathematics
-- Unit prices
-- Project-specific data
+- AASHTO calculations
+- HCM calculations
+- Traffic equations
+- Earthwork equations
+- Cost equations
 
-These responsibilities belong to their respective modules.
+Those belong to the corresponding calculation modules.
 
 ---
 
-# Future Extensions
+# Design Principles
 
-The architecture is designed to support future integration with:
+The engine follows:
 
-- Autodesk Civil 3D
-- Bentley OpenRoads Designer
-- Autodesk InfraWorks
-- ArcGIS
-- QGIS
-- SUMO
-- CARLA
-- Cloud-based Digital Twin platforms
-- Distributed optimization engines
+- Separation of Concerns
+- Single Responsibility Principle
+- Orchestration Pattern
+- Modular Architecture
+- Configuration-Driven Execution
+- Extensible Workflow Design
 
-without changing the Engine architecture.
+---
+
+# Future Development
+
+The Engine is designed to support:
+
+- Multi-threaded execution
+- Distributed optimization
+- Cloud execution
+- Batch project processing
+- Real-time Digital Twin synchronization
+- Plugin-based optimization solvers
+- Multiple BIM/CAD integrations
+
+without modifying the public Engine interface.
+
+---
+
+# Implementation Notes
+
+The Engine should remain lightweight.
+
+Its primary purpose is to orchestrate the execution of the CDT-ROP platform by coordinating specialized modules rather than implementing domain-specific logic.
+
+This architecture ensures that engineering calculations, optimization algorithms, Digital Twin functionality, and reporting remain independent, reusable, and easy to maintain.

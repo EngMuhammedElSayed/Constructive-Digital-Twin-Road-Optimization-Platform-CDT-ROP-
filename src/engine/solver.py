@@ -7,96 +7,118 @@ Optimization Solver Manager
 CDT-ROP
 Constructive Digital Twin Road Optimization Platform
 
+Provides a unified interface for optimization solvers.
+
 Author : CDT-ROP Team
-Version: 3.0.0
+Version : 3.0.0
 """
 
 from __future__ import annotations
 
-from typing import Any
+from abc import ABC, abstractmethod
+from typing import Any, Dict
 
 
-class Solver:
+# ==========================================================
+# Abstract Solver
+# ==========================================================
+
+class OptimizationSolver(ABC):
     """
-    Generic optimization solver interface.
-
-    This class acts as a facade between the
-    application engine and optimization algorithms.
-
-    It does NOT implement optimization algorithms.
+    Base interface for all optimization algorithms.
     """
 
-    def __init__(self, algorithm):
-
-        self.algorithm = algorithm
-
-    # =====================================================
-    # Solve
-    # =====================================================
-
+    @abstractmethod
     def solve(
-
         self,
-
         problem: Any
-
-    ):
-
+    ) -> Dict:
         """
-        Execute optimization.
+        Solve an optimization problem.
 
         Parameters
         ----------
         problem
-            Optimization problem instance.
+            Optimization problem.
 
         Returns
         -------
-        Optimization Result
+        Dict
+            Optimization results.
+        """
+        ...
+
+
+# ==========================================================
+# Solver Manager
+# ==========================================================
+
+class SolverManager:
+    """
+    Registers and executes optimization solvers.
+    """
+
+    def __init__(self) -> None:
+
+        self._solvers: Dict[str, OptimizationSolver] = {}
+
+    # ------------------------------------------------------
+
+    def register(
+        self,
+        name: str,
+        solver: OptimizationSolver
+    ) -> None:
+        """
+        Register a solver.
         """
 
-        return self.algorithm.solve(problem)
+        self._solvers[name.lower()] = solver
 
-    # =====================================================
-    # Information
-    # =====================================================
+    # ------------------------------------------------------
 
-    @property
-    def name(self):
+    def available(self):
 
-        return getattr(
+        """
+        Return registered solvers.
+        """
 
-            self.algorithm,
+        return sorted(self._solvers.keys())
 
-            "name",
+    # ------------------------------------------------------
 
-            self.algorithm.__class__.__name__
+    def get(
+        self,
+        name: str
+    ) -> OptimizationSolver:
 
-        )
+        """
+        Return a registered solver.
+        """
 
-    @property
-    def version(self):
+        name = name.lower()
 
-        return getattr(
+        if name not in self._solvers:
 
-            self.algorithm,
+            raise ValueError(
 
-            "version",
+                f"Unknown solver: {name}"
 
-            "Unknown"
+            )
 
-        )
+        return self._solvers[name]
 
-    # =====================================================
-    # Summary
-    # =====================================================
+    # ------------------------------------------------------
 
-    def summary(self):
+    def solve(
+        self,
+        name: str,
+        problem: Any
+    ) -> Dict:
+        """
+        Execute the selected solver.
+        """
 
-        return {
+        solver = self.get(name)
 
-            "solver": self.name,
-
-            "version": self.version
-
-        }
+        return solver.solve(problem)

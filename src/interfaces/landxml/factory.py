@@ -2,12 +2,12 @@
 factory.py
 ==========
 
-JSON Interface Factory
+LandXML Interface Factory
 
 CDT-ROP
 Constructive Digital Twin Road Optimization Platform
 
-Creates JSON interface objects.
+Creates LandXML interface objects.
 
 Author : CDT-ROP Team
 Version : 3.0.0
@@ -15,15 +15,15 @@ Version : 3.0.0
 
 from __future__ import annotations
 
-from .reader import JsonReader
-from .writer import JsonWriter
-from .mapper import JsonMapper
-from .validator import JsonValidator
+from .reader import LandXMLReader
+from .writer import LandXMLWriter
+from .mapper import LandXMLMapper
+from .validator import LandXMLValidator
 
 
-class JsonFactory:
+class LandXMLFactory:
     """
-    Factory responsible for creating JSON interface objects.
+    Factory responsible for creating LandXML interface objects.
     """
 
     # =====================================================
@@ -31,41 +31,41 @@ class JsonFactory:
     # =====================================================
 
     @staticmethod
-    def create_reader() -> JsonReader:
+    def create_reader() -> LandXMLReader:
         """
-        Create a JSON reader.
+        Create a LandXML reader.
         """
-        return JsonReader()
+        return LandXMLReader()
 
     # =====================================================
     # Writer
     # =====================================================
 
     @staticmethod
-    def create_writer() -> JsonWriter:
+    def create_writer() -> LandXMLWriter:
         """
-        Create a JSON writer.
+        Create a LandXML writer.
         """
-        return JsonWriter()
+        return LandXMLWriter()
 
     # =====================================================
     # Mapper
     # =====================================================
 
     @staticmethod
-    def create_mapper() -> JsonMapper:
+    def create_mapper() -> LandXMLMapper:
         """
-        Create a JSON mapper.
+        Create a LandXML mapper.
         """
-        return JsonMapper()
+        return LandXMLMapper()
 
     # =====================================================
     # Validator
     # =====================================================
 
     @staticmethod
-    def create_validator() -> JsonValidator:
+    def create_validator() -> LandXMLValidator:
         """
-        Create a JSON validator.
+        Create a LandXML validator.
         """
-        return JsonValidator()
+        return LandXMLValidator()

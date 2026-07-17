@@ -1,17 +1,16 @@
 """
-validator.py
-============
+mapper.py
+=========
 
-JSON Validator Interface
+LandXML Data Mapper
 
 CDT-ROP
 Constructive Digital Twin Road Optimization Platform
 
-Defines the abstract interface for validating JSON
-documents used throughout the platform.
+Maps LandXML entities to CDT-ROP domain models and
+vice versa.
 
-This module performs no JSON parsing or schema validation.
-Concrete implementations belong to the integration layer.
+This module performs no XML parsing or file I/O.
 
 Author : CDT-ROP Team
 Version : 3.0.0
@@ -23,107 +22,104 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 
 
-class JsonValidator(ABC):
+class LandXMLMapper(ABC):
     """
-    Abstract interface for validating JSON documents.
+    Abstract interface for mapping LandXML entities
+    to CDT-ROP domain models.
     """
 
     # =====================================================
-    # Document Validation
+    # Generic Mapping
     # =====================================================
 
     @abstractmethod
-    def validate_document(
+    def map_to_model(
         self,
-        document: Dict[str, Any]
-    ) -> bool:
+        data: Dict[str, Any],
+        model_class: type
+    ) -> Any:
         """
-        Validate an entire JSON document.
+        Map LandXML data to a domain model.
+        """
+        ...
+
+    @abstractmethod
+    def map_from_model(
+        self,
+        model: Any
+    ) -> Dict[str, Any]:
+        """
+        Convert a domain model into LandXML-compatible data.
         """
         ...
 
     # =====================================================
-    # Schema Validation
+    # Alignment
     # =====================================================
 
     @abstractmethod
-    def validate_schema(
+    def map_alignment(
         self,
-        document: Dict[str, Any]
-    ) -> bool:
+        alignment: Dict[str, Any]
+    ) -> Any:
         """
-        Validate JSON schema.
+        Map Alignment data.
         """
         ...
 
     # =====================================================
-    # Required Keys
+    # Profile
     # =====================================================
 
     @abstractmethod
-    def validate_required_keys(
+    def map_profile(
         self,
-        document: Dict[str, Any],
-        required_keys: List[str]
-    ) -> bool:
+        profile: Dict[str, Any]
+    ) -> Any:
         """
-        Validate required keys.
+        Map Profile data.
         """
         ...
 
     # =====================================================
-    # Data Types
+    # Surface
     # =====================================================
 
     @abstractmethod
-    def validate_data_types(
+    def map_surface(
         self,
-        document: Dict[str, Any]
-    ) -> bool:
+        surface: Dict[str, Any]
+    ) -> Any:
         """
-        Validate value data types.
+        Map Surface data.
         """
         ...
 
     # =====================================================
-    # Values
+    # Corridor
     # =====================================================
 
     @abstractmethod
-    def validate_values(
+    def map_corridor(
         self,
-        document: Dict[str, Any]
-    ) -> bool:
+        corridor: Dict[str, Any]
+    ) -> Any:
         """
-        Validate JSON values.
+        Map Corridor data.
         """
         ...
 
     # =====================================================
-    # Units
+    # COGO Points
     # =====================================================
 
     @abstractmethod
-    def validate_units(
+    def map_cogo_points(
         self,
-        document: Dict[str, Any]
-    ) -> bool:
+        points: List[Dict[str, Any]]
+    ) -> List[Any]:
         """
-        Validate engineering units.
-        """
-        ...
-
-    # =====================================================
-    # Version
-    # =====================================================
-
-    @abstractmethod
-    def validate_version(
-        self,
-        document: Dict[str, Any]
-    ) -> bool:
-        """
-        Validate JSON version compatibility.
+        Map COGO points.
         """
         ...
 
@@ -132,38 +128,25 @@ class JsonValidator(ABC):
     # =====================================================
 
     @abstractmethod
-    def validate_metadata(
+    def map_metadata(
         self,
-        document: Dict[str, Any]
-    ) -> bool:
+        metadata: Dict[str, Any]
+    ) -> Any:
         """
-        Validate document metadata.
+        Map LandXML metadata.
         """
         ...
 
     # =====================================================
-    # Complete Validation
+    # Units
     # =====================================================
 
     @abstractmethod
-    def validate(
+    def map_units(
         self,
-        document: Dict[str, Any]
-    ) -> Dict[str, Any]:
+        units: Dict[str, Any]
+    ) -> Any:
         """
-        Execute the complete validation process.
-
-        Returns
-        -------
-        Dict[str, Any]
-
-        Example
-        -------
-        {
-            "valid": True,
-            "errors": [],
-            "warnings": [],
-            "document_version": "3.0"
-        }
+        Map engineering units.
         """
         ...

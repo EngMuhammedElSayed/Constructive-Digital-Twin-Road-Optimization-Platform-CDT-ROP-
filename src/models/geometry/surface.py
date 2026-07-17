@@ -1,88 +1,108 @@
 """
-Surface Data Model
+surface.py
+==========
 
-This module defines the surface model used by the
-Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Surface Domain Model
 
-A Surface represents any terrain or design surface used
-throughout the engineering workflow.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-This module stores engineering data only.
-No calculations are implemented here.
+Represents a terrain or roadway surface.
 
-Author:
-Eng. Muhammed
+This module contains engineering data only.
+No surface calculations are performed here.
 
-Research:
-MSc Research - Cairo University
+Author : CDT-ROP Team
+Version : 3.0.0
 """
 
-from dataclasses import dataclass
-from typing import Optional
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
+from uuid import uuid4
 
 
-@dataclass
+@dataclass(slots=True)
 class Surface:
     """
-    Represents a terrain or design surface.
+    Represents a terrain or roadway surface.
     """
 
-    # -------------------------------------------------
-    # General Information
-    # -------------------------------------------------
+    # =====================================================
+    # Identity
+    # =====================================================
 
-    name: str
+    id: str = field(default_factory=lambda: str(uuid4()))
+
+    name: str = ""
 
     description: str = ""
 
-    surface_type: str = "Existing Ground"
+    # =====================================================
+    # Surface Information
+    # =====================================================
 
-    # -------------------------------------------------
-    # Coordinate System
-    # -------------------------------------------------
+    surface_type: str = "TIN"
+
+    source: str = ""
 
     coordinate_system: str = ""
 
-    units: str = "Meters"
+    units: str = "Metric"
 
-    # -------------------------------------------------
-    # Spatial Information
-    # -------------------------------------------------
+    # =====================================================
+    # Geometry
+    # =====================================================
 
-    area: float = 0.0
+    vertices: List[Any] = field(default_factory=list)
 
-    minimum_elevation: float = 0.0
+    triangles: List[Any] = field(default_factory=list)
 
-    maximum_elevation: float = 0.0
+    breaklines: List[Any] = field(default_factory=list)
 
-    average_elevation: float = 0.0
+    boundaries: List[Any] = field(default_factory=list)
 
-    # -------------------------------------------------
-    # Surface Source
-    # -------------------------------------------------
+    contours: List[Any] = field(default_factory=list)
 
-    source_file: Optional[str] = None
+    # =====================================================
+    # Extents
+    # =====================================================
 
-    source_format: str = ""
+    minimum_elevation_m: float = 0.0
 
-    # -------------------------------------------------
-    # Civil 3D Information
-    # -------------------------------------------------
+    maximum_elevation_m: float = 0.0
 
-    civil3d_surface_name: str = ""
+    average_elevation_m: float = 0.0
 
-    civil3d_object_id: Optional[str] = None
+    area_m2: float = 0.0
 
-    # -------------------------------------------------
-    # Digital Twin
-    # -------------------------------------------------
+    # =====================================================
+    # Metadata
+    # =====================================================
 
-    is_dynamic: bool = False
+    author: str = ""
 
-    last_updated: Optional[str] = None
+    version: str = "1.0"
 
-    # -------------------------------------------------
-    # References
-    # -------------------------------------------------
+    properties: Dict[str, Any] = field(default_factory=dict)
 
-    parent_project: Optional[str] = None
+    # =====================================================
+    # Helper Properties
+    # =====================================================
+
+    @property
+    def vertex_count(self) -> int:
+        return len(self.vertices)
+
+    @property
+    def triangle_count(self) -> int:
+        return len(self.triangles)
+
+    @property
+    def breakline_count(self) -> int:
+        return len(self.breaklines)
+
+    @property
+    def contour_count(self) -> int:
+        return len(self.contours)

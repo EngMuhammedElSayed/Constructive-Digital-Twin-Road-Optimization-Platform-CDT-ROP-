@@ -1,74 +1,120 @@
 """
-Design Criteria Data Model
+design_criteria.py
+==================
 
-This module defines the engineering design criteria used by
-the Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Road Design Criteria Domain Model
 
-The values represent engineering inputs and design limits.
-No engineering calculations are implemented here.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
+
+Defines roadway design criteria used throughout the platform.
+
+This module contains engineering design parameters only.
+No engineering calculations are performed here.
+
+Author : CDT-ROP Team
+Version : 3.0.0
 """
+
+from __future__ import annotations
 
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(slots=True)
 class DesignCriteria:
     """
-    Engineering design criteria used throughout the project.
+    Represents roadway geometric design criteria.
     """
 
-    # ----------------------------------------
+    # =====================================================
     # General
-    # ----------------------------------------
+    # =====================================================
 
     design_standard: str = "AASHTO"
 
-    design_speed: float = 100.0        # km/h
+    design_speed_kph: float = 90.0
 
     terrain_type: str = "Rolling"
 
-    road_classification: str = "Rural Arterial"
+    roadway_classification: str = "Urban Highway"
 
-    # ----------------------------------------
+    # =====================================================
     # Cross Section
-    # ----------------------------------------
+    # =====================================================
 
-    lane_width: float = 3.65           # m
+    lane_width_m: float = 3.65
 
-    shoulder_width: float = 2.50       # m
+    shoulder_width_m: float = 2.50
 
-    median_width: float = 6.00         # m
+    median_width_m: float = 5.00
 
-    cross_slope: float = 0.02
+    cross_slope_percent: float = 2.0
 
-    max_superelevation: float = 0.08
-
-    # ----------------------------------------
+    # =====================================================
     # Horizontal Alignment
-    # ----------------------------------------
+    # =====================================================
 
-    minimum_curve_radius: float = 0.0
+    minimum_horizontal_radius_m: float = 0.0
 
-    minimum_spiral_length: float = 0.0
+    maximum_superelevation: float = 0.06
 
-    maximum_deflection_angle: float = 0.0
+    maximum_side_friction: float = 0.13
 
-    # ----------------------------------------
+    minimum_transition_length_m: float = 0.0
+
+    # =====================================================
     # Vertical Alignment
-    # ----------------------------------------
+    # =====================================================
 
-    maximum_grade: float = 0.06
+    maximum_grade_percent: float = 5.0
 
-    minimum_grade: float = 0.005
+    minimum_grade_percent: float = 0.3
 
-    minimum_k_value: float = 0.0
+    minimum_crest_k: float = 0.0
 
-    # ----------------------------------------
+    minimum_sag_k: float = 0.0
+
+    # =====================================================
     # Sight Distance
-    # ----------------------------------------
+    # =====================================================
 
-    stopping_sight_distance: float = 0.0
+    stopping_sight_distance_m: float = 0.0
 
-    passing_sight_distance: float = 0.0
+    passing_sight_distance_m: float = 0.0
 
-    decision_sight_distance: float = 0.0
+    decision_sight_distance_m: float = 0.0
+
+    intersection_sight_distance_m: float = 0.0
+
+    # =====================================================
+    # Traffic
+    # =====================================================
+
+    design_hour_volume: float = 0.0
+
+    number_of_lanes: int = 4
+
+    level_of_service: str = "C"
+
+    # =====================================================
+    # Safety
+    # =====================================================
+
+    reaction_time_sec: float = 2.5
+
+    deceleration_rate_mps2: float = 3.4
+
+    # =====================================================
+    # Drainage
+    # =====================================================
+
+    minimum_drainage_slope_percent: float = 0.5
+
+    # =====================================================
+    # Earthwork
+    # =====================================================
+
+    maximum_cut_slope: float = 1.5
+
+    maximum_fill_slope: float = 2.0

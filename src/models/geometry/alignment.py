@@ -1,77 +1,120 @@
 """
-Alignment Data Model
+alignment.py
+============
 
-This module defines the road alignment model used by the
-Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Horizontal Alignment Domain Model
 
-The Alignment object represents the geometric definition of a roadway
-centerline. It stores only engineering data and does not perform any
-calculations.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-Author:
-Eng. Muhammed
+Represents a roadway horizontal alignment.
 
-Research:
-MSc Research - Cairo University
+This module contains engineering data only.
+No geometric calculations are performed here.
+
+Author : CDT-ROP Team
+Version : 3.0.0
 """
 
-from dataclasses import dataclass
-from typing import Optional
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
+from uuid import uuid4
 
 
-@dataclass
+@dataclass(slots=True)
 class Alignment:
     """
-    Represents a roadway alignment.
-
-    This model stores alignment metadata and geometric properties.
-    Engineering calculations are implemented in the calculation engine.
+    Represents a roadway horizontal alignment.
     """
 
-    # -------------------------------------------------
-    # General Information
-    # -------------------------------------------------
+    # =====================================================
+    # Identity
+    # =====================================================
 
-    name: str
+    id: str = field(default_factory=lambda: str(uuid4()))
+
+    name: str = ""
 
     description: str = ""
 
-    alignment_type: str = "Centerline"
+    # =====================================================
+    # General
+    # =====================================================
 
-    # -------------------------------------------------
-    # Stationing
-    # -------------------------------------------------
+    station_start: float = 0.0
 
-    start_station: float = 0.0
+    station_end: float = 0.0
 
-    end_station: float = 0.0
+    total_length_m: float = 0.0
 
-    length: float = 0.0
+    design_speed_kph: float = 90.0
 
-    # -------------------------------------------------
+    # =====================================================
+    # Geometry
+    # =====================================================
+
+    pi_points: List[Any] = field(default_factory=list)
+
+    tangents: List[Any] = field(default_factory=list)
+
+    circular_curves: List[Any] = field(default_factory=list)
+
+    transition_curves: List[Any] = field(default_factory=list)
+
+    stations: List[Any] = field(default_factory=list)
+
+    # =====================================================
     # Design Parameters
-    # -------------------------------------------------
+    # =====================================================
 
-    design_speed: float = 90.0      # km/h
+    minimum_radius_m: float = 0.0
 
-    design_standard: str = "AASHTO"
+    maximum_superelevation: float = 0.06
 
-    # -------------------------------------------------
-    # Geometry Information
-    # -------------------------------------------------
+    maximum_side_friction: float = 0.13
 
-    number_of_tangents: int = 0
+    lane_count: int = 4
 
-    number_of_horizontal_curves: int = 0
+    lane_width_m: float = 3.65
 
-    number_of_vertical_curves: int = 0
+    # =====================================================
+    # Coordinate System
+    # =====================================================
 
-    number_of_spirals: int = 0
+    coordinate_system: str = ""
 
-    # -------------------------------------------------
-    # References
-    # -------------------------------------------------
+    units: str = "Metric"
 
-    parent_project: Optional[str] = None
+    # =====================================================
+    # Metadata
+    # =====================================================
 
-    source_file: Optional[str] = None
+    source: str = ""
+
+    author: str = ""
+
+    version: str = "1.0"
+
+    properties: Dict[str, Any] = field(default_factory=dict)
+
+    # =====================================================
+    # Helper Properties
+    # =====================================================
+
+    @property
+    def pi_count(self) -> int:
+        return len(self.pi_points)
+
+    @property
+    def tangent_count(self) -> int:
+        return len(self.tangents)
+
+    @property
+    def curve_count(self) -> int:
+        return len(self.circular_curves)
+
+    @property
+    def transition_count(self) -> int:
+        return len(self.transition_curves)

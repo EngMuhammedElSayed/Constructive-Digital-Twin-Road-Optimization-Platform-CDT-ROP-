@@ -1,93 +1,118 @@
 """
-Corridor Data Model
+corridor.py
+===========
 
-This module defines the roadway corridor model used by the
-Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Road Corridor Domain Model
 
-A Corridor represents the physical roadway generated from one or more
-alignments, profiles, and assemblies.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
 
-This module contains only engineering data.
-No calculations are performed here.
+Represents a roadway corridor.
 
-Author:
-Eng. Muhammed
+This module contains engineering data only.
+No corridor modelling or Civil 3D logic is implemented here.
 
-Research:
-MSc Research - Cairo University
+Author : CDT-ROP Team
+Version : 3.0.0
 """
 
-from dataclasses import dataclass
-from typing import Optional
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
+from uuid import uuid4
 
 
-@dataclass
+@dataclass(slots=True)
 class Corridor:
     """
     Represents a roadway corridor.
-
-    A corridor is generated from an alignment, profile,
-    and assembly definition.
     """
 
-    # -------------------------------------------------
-    # General Information
-    # -------------------------------------------------
+    # =====================================================
+    # Identity
+    # =====================================================
 
-    name: str
+    id: str = field(default_factory=lambda: str(uuid4()))
+
+    name: str = ""
 
     description: str = ""
 
-    # -------------------------------------------------
-    # Corridor References
-    # -------------------------------------------------
+    # =====================================================
+    # References
+    # =====================================================
 
-    alignment_name: str = ""
+    alignment_id: str = ""
 
-    profile_name: str = ""
+    profile_id: str = ""
 
-    assembly_name: str = ""
+    assembly_id: str = ""
 
-    # -------------------------------------------------
-    # Station Range
-    # -------------------------------------------------
+    baseline_name: str = ""
+
+    # =====================================================
+    # Stations
+    # =====================================================
 
     start_station: float = 0.0
 
     end_station: float = 0.0
 
-    length: float = 0.0
+    length_m: float = 0.0
 
-    # -------------------------------------------------
-    # Corridor Configuration
-    # -------------------------------------------------
+    # =====================================================
+    # Corridor Components
+    # =====================================================
 
-    region_count: int = 1
+    regions: List[Any] = field(default_factory=list)
 
-    baseline_count: int = 1
+    targets: List[Any] = field(default_factory=list)
 
-    frequency: float = 10.0          # meters
+    feature_lines: List[Any] = field(default_factory=list)
 
-    # -------------------------------------------------
-    # Surfaces
-    # -------------------------------------------------
+    surfaces: List[Any] = field(default_factory=list)
 
-    existing_ground_surface: str = ""
+    sample_lines: List[Any] = field(default_factory=list)
 
-    finished_ground_surface: str = ""
+    # =====================================================
+    # Design Parameters
+    # =====================================================
 
-    # -------------------------------------------------
-    # Quantities
-    # -------------------------------------------------
+    frequency_along_tangent_m: float = 10.0
 
-    corridor_volume_available: bool = False
+    frequency_along_curve_m: float = 5.0
 
-    section_count: int = 0
+    frequency_along_spiral_m: float = 5.0
 
-    # -------------------------------------------------
-    # References
-    # -------------------------------------------------
+    # =====================================================
+    # Metadata
+    # =====================================================
 
-    parent_project: Optional[str] = None
+    source: str = ""
 
-    source_file: Optional[str] = None
+    author: str = ""
+
+    version: str = "1.0"
+
+    properties: Dict[str, Any] = field(default_factory=dict)
+
+    # =====================================================
+    # Helper Properties
+    # =====================================================
+
+    @property
+    def region_count(self) -> int:
+        return len(self.regions)
+
+    @property
+    def surface_count(self) -> int:
+        return len(self.surfaces)
+
+    @property
+    def feature_line_count(self) -> int:
+        return len(self.feature_lines)
+
+    @property
+    def target_count(self) -> int:
+        return len(self.targets)

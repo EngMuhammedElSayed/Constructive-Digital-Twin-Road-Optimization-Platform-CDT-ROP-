@@ -2,16 +2,15 @@
 writer.py
 =========
 
-JSON Writer Interface
+LandXML Writer Interface
 
 CDT-ROP
 Constructive Digital Twin Road Optimization Platform
 
-Defines the abstract interface for writing JSON documents.
+Defines the abstract interface for exporting engineering
+data into LandXML documents.
 
-This module contains no implementation using Python's
-built-in json module or third-party libraries.
-
+This module contains no XML serialization logic.
 Concrete implementations belong to the integration layer.
 
 Author : CDT-ROP Team
@@ -25,10 +24,9 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 
-class JsonWriter(ABC):
+class LandXMLWriter(ABC):
     """
-    Abstract interface for exporting CDT-ROP data
-    into JSON documents.
+    Abstract interface for writing LandXML documents.
     """
 
     # =====================================================
@@ -38,17 +36,7 @@ class JsonWriter(ABC):
     @abstractmethod
     def create_document(self) -> None:
         """
-        Create a new JSON document.
-        """
-        ...
-
-    @abstractmethod
-    def open_document(
-        self,
-        file_path: Path
-    ) -> None:
-        """
-        Open an existing JSON document.
+        Create a new LandXML document.
         """
         ...
 
@@ -58,145 +46,14 @@ class JsonWriter(ABC):
         destination: Path
     ) -> None:
         """
-        Save the JSON document.
+        Save the LandXML document.
         """
         ...
 
     @abstractmethod
     def close(self) -> None:
         """
-        Close the JSON document.
-        """
-        ...
-
-    # =====================================================
-    # Write
-    # =====================================================
-
-    @abstractmethod
-    def write_document(
-        self,
-        document: Dict[str, Any]
-    ) -> None:
-        """
-        Write a complete JSON document.
-        """
-        ...
-
-    @abstractmethod
-    def write_object(
-        self,
-        key: str,
-        value: Dict[str, Any]
-    ) -> None:
-        """
-        Write a JSON object.
-        """
-        ...
-
-    @abstractmethod
-    def write_array(
-        self,
-        key: str,
-        values: List[Any]
-    ) -> None:
-        """
-        Write a JSON array.
-        """
-        ...
-
-    @abstractmethod
-    def write_value(
-        self,
-        key: str,
-        value: Any
-    ) -> None:
-        """
-        Write a single JSON value.
-        """
-        ...
-
-    # =====================================================
-    # Project Resources
-    # =====================================================
-
-    @abstractmethod
-    def export_project(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export project configuration.
-        """
-        ...
-
-    @abstractmethod
-    def export_alignment(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export alignment data.
-        """
-        ...
-
-    @abstractmethod
-    def export_terrain(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export terrain data.
-        """
-        ...
-
-    @abstractmethod
-    def export_traffic(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export traffic data.
-        """
-        ...
-
-    @abstractmethod
-    def export_weather(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export weather data.
-        """
-        ...
-
-    @abstractmethod
-    def export_cost(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export cost data.
-        """
-        ...
-
-    @abstractmethod
-    def export_optimization(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export optimization settings.
-        """
-        ...
-
-    @abstractmethod
-    def export_digital_twin(
-        self,
-        data: Dict[str, Any]
-    ) -> None:
-        """
-        Export Digital Twin state.
+        Close the document.
         """
         ...
 
@@ -211,5 +68,124 @@ class JsonWriter(ABC):
     ) -> None:
         """
         Write document metadata.
+        """
+        ...
+
+    @abstractmethod
+    def write_units(
+        self,
+        units: Dict[str, Any]
+    ) -> None:
+        """
+        Write engineering units.
+        """
+        ...
+
+    @abstractmethod
+    def write_coordinate_system(
+        self,
+        coordinate_system: Dict[str, Any]
+    ) -> None:
+        """
+        Write coordinate reference system.
+        """
+        ...
+
+    # =====================================================
+    # Geometry
+    # =====================================================
+
+    @abstractmethod
+    def write_alignments(
+        self,
+        alignments: List[Dict[str, Any]]
+    ) -> None:
+        """
+        Write horizontal alignments.
+        """
+        ...
+
+    @abstractmethod
+    def write_profiles(
+        self,
+        profiles: List[Dict[str, Any]]
+    ) -> None:
+        """
+        Write profiles.
+        """
+        ...
+
+    @abstractmethod
+    def write_surfaces(
+        self,
+        surfaces: List[Dict[str, Any]]
+    ) -> None:
+        """
+        Write terrain surfaces.
+        """
+        ...
+
+    @abstractmethod
+    def write_corridors(
+        self,
+        corridors: List[Dict[str, Any]]
+    ) -> None:
+        """
+        Write corridor definitions.
+        """
+        ...
+
+    @abstractmethod
+    def write_cross_sections(
+        self,
+        cross_sections: List[Dict[str, Any]]
+    ) -> None:
+        """
+        Write cross sections.
+        """
+        ...
+
+    @abstractmethod
+    def write_cogo_points(
+        self,
+        points: List[Dict[str, Any]]
+    ) -> None:
+        """
+        Write COGO points.
+        """
+        ...
+
+    @abstractmethod
+    def write_pipe_networks(
+        self,
+        pipe_networks: List[Dict[str, Any]]
+    ) -> None:
+        """
+        Write pipe networks.
+        """
+        ...
+
+    # =====================================================
+    # Generic
+    # =====================================================
+
+    @abstractmethod
+    def write_element(
+        self,
+        element_name: str,
+        data: Dict[str, Any]
+    ) -> None:
+        """
+        Write a generic LandXML element.
+        """
+        ...
+
+    @abstractmethod
+    def write_document(
+        self,
+        data: Dict[str, Any]
+    ) -> None:
+        """
+        Write a complete LandXML document.
         """
         ...

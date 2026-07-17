@@ -1,79 +1,184 @@
 """
-Cost Parameters Data Model
+cost_parameters.py
+==================
 
-This module defines all economic parameters used by the
-Constructive Digital Twin Road Optimization Platform (CDT-ROP).
+Cost Parameters Domain Model
 
-The class stores only cost-related inputs.
-No engineering calculations are implemented here.
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
+
+Defines the engineering cost parameters used by the
+cost calculation modules.
+
+This module contains data only.
+No cost calculations are performed here.
+
+Author : CDT-ROP Team
+Version : 3.0.0
 """
 
-from dataclasses import dataclass
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Dict
 
 
-@dataclass
+# ==========================================================
+# Earthwork Costs
+# ==========================================================
+
+@dataclass(slots=True)
+class EarthworkCostParameters:
+
+    excavation_cost_per_m3: float = 0.0
+
+    embankment_cost_per_m3: float = 0.0
+
+    disposal_cost_per_m3: float = 0.0
+
+
+# ==========================================================
+# Pavement Costs
+# ==========================================================
+
+@dataclass(slots=True)
+class PavementCostParameters:
+
+    subgrade_cost_per_m2: float = 0.0
+
+    subbase_cost_per_m2: float = 0.0
+
+    base_cost_per_m2: float = 0.0
+
+    asphalt_cost_per_m2: float = 0.0
+
+
+# ==========================================================
+# Structures
+# ==========================================================
+
+@dataclass(slots=True)
+class StructureCostParameters:
+
+    bridge_cost_per_m: float = 0.0
+
+    culvert_cost_per_unit: float = 0.0
+
+    retaining_wall_cost_per_m2: float = 0.0
+
+
+# ==========================================================
+# Drainage
+# ==========================================================
+
+@dataclass(slots=True)
+class DrainageCostParameters:
+
+    pipe_cost_per_m: float = 0.0
+
+    manhole_cost_per_unit: float = 0.0
+
+    inlet_cost_per_unit: float = 0.0
+
+
+# ==========================================================
+# Utilities
+# ==========================================================
+
+@dataclass(slots=True)
+class UtilityCostParameters:
+
+    relocation_cost_per_m: float = 0.0
+
+    protection_cost_per_m: float = 0.0
+
+
+# ==========================================================
+# Traffic
+# ==========================================================
+
+@dataclass(slots=True)
+class TrafficCostParameters:
+
+    marking_cost_per_m2: float = 0.0
+
+    sign_cost_per_unit: float = 0.0
+
+    signal_cost_per_unit: float = 0.0
+
+    lighting_cost_per_unit: float = 0.0
+
+
+# ==========================================================
+# Maintenance
+# ==========================================================
+
+@dataclass(slots=True)
+class MaintenanceCostParameters:
+
+    annual_maintenance_cost: float = 0.0
+
+    rehabilitation_cost: float = 0.0
+
+    overlay_cost_per_m2: float = 0.0
+
+
+# ==========================================================
+# Environmental
+# ==========================================================
+
+@dataclass(slots=True)
+class EnvironmentalCostParameters:
+
+    carbon_cost_per_ton: float = 0.0
+
+    mitigation_cost: float = 0.0
+
+
+# ==========================================================
+# Cost Parameters
+# ==========================================================
+
+@dataclass(slots=True)
 class CostParameters:
     """
-    Stores all cost parameters used by the optimization engine.
-
-    These values are supplied by the user or imported from
-    Civil 3D, Excel, JSON, or external databases.
+    Complete cost parameter model.
     """
 
-    # -------------------------------------------------
-    # General Information
-    # -------------------------------------------------
+    currency: str = "EGP"
 
-    currency: str = "USD"
+    earthwork: EarthworkCostParameters = field(
+        default_factory=EarthworkCostParameters
+    )
 
-    analysis_period: int = 20
+    pavement: PavementCostParameters = field(
+        default_factory=PavementCostParameters
+    )
 
-    discount_rate: float = 0.05
+    structures: StructureCostParameters = field(
+        default_factory=StructureCostParameters
+    )
 
-    contingency_factor: float = 0.10
+    drainage: DrainageCostParameters = field(
+        default_factory=DrainageCostParameters
+    )
 
-    # -------------------------------------------------
-    # Earthwork Cost
-    # -------------------------------------------------
+    utilities: UtilityCostParameters = field(
+        default_factory=UtilityCostParameters
+    )
 
-    cut_cost_per_m3: float = 0.0
+    traffic: TrafficCostParameters = field(
+        default_factory=TrafficCostParameters
+    )
 
-    fill_cost_per_m3: float = 0.0
+    maintenance: MaintenanceCostParameters = field(
+        default_factory=MaintenanceCostParameters
+    )
 
-    unsuitable_material_cost_per_m3: float = 0.0
+    environmental: EnvironmentalCostParameters = field(
+        default_factory=EnvironmentalCostParameters
+    )
 
-    borrow_material_cost_per_m3: float = 0.0
-
-    haul_cost_per_m3_km: float = 0.0
-
-    # -------------------------------------------------
-    # Pavement Cost
-    # -------------------------------------------------
-
-    pavement_cost_per_m2: float = 0.0
-
-    asphalt_cost_per_ton: float = 0.0
-
-    base_course_cost_per_m3: float = 0.0
-
-    subbase_cost_per_m3: float = 0.0
-
-    shoulder_cost_per_m2: float = 0.0
-
-    # -------------------------------------------------
-    # Right-of-Way (ROW)
-    # -------------------------------------------------
-
-    row_cost_per_m2: float = 0.0
-
-    land_acquisition_cost_per_m2: float = 0.0
-
-    compensation_cost: float = 0.0
-
-    # -------------------------------------------------
-    # Future Extensions
-    # -------------------------------------------------
-
-    maintenance_cost_per_year: float = 0.0
-
-    operation_cost_per_year: float = 0.0
+    additional_costs: Dict[str, float] = field(
+        default_factory=dict
+    )
