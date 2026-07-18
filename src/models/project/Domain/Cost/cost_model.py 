@@ -1,0 +1,98 @@
+"""
+cost_model.py
+=============
+
+Project Cost Model
+
+CDT-ROP
+Constructive Digital Twin Road Optimization Platform
+
+Represents the complete cost model of a road project.
+
+This class acts as the Aggregate Root for all project
+cost-related domain models.
+
+No engineering calculations or estimation algorithms
+are implemented here.
+
+Author : CDT-ROP Team
+Version : 3.0.0
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+
+from .construction_cost import ConstructionCost
+from .cost_breakdown import CostBreakdown
+from .cost_summary import CostSummary
+from .cost_parameters import CostParameters
+from .contingency import Contingency
+
+
+@dataclass(slots=True)
+class CostModel:
+    """
+    Aggregate Root for all project cost information.
+    """
+
+    # =====================================================
+    # Core Models
+    # =====================================================
+
+    construction: ConstructionCost = field(
+        default_factory=ConstructionCost
+    )
+
+    breakdown: CostBreakdown = field(
+        default_factory=CostBreakdown
+    )
+
+    summary: CostSummary = field(
+        default_factory=CostSummary
+    )
+
+    parameters: CostParameters = field(
+        default_factory=CostParameters
+    )
+
+    contingency: Contingency = field(
+        default_factory=Contingency
+    )
+
+    # =====================================================
+    # General Information
+    # =====================================================
+
+    currency: str = "EGP"
+
+    estimation_level: str = "Conceptual"
+
+    version: str = "1.0"
+
+    notes: str = ""
+
+    # =====================================================
+    # Convenience Properties
+    # =====================================================
+
+    @property
+    def total_cost(self) -> float:
+        """
+        Returns the project total cost.
+        """
+        return self.summary.total_cost
+
+    @property
+    def direct_cost(self) -> float:
+        """
+        Returns the direct construction cost.
+        """
+        return self.breakdown.direct_cost
+
+    @property
+    def indirect_cost(self) -> float:
+        """
+        Returns the indirect construction cost.
+        """
+        return self.breakdown.indirect_cost
